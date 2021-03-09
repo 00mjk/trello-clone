@@ -15,14 +15,18 @@ var connectionOptions = {
     username: config.user || 'postgres',
     password: config.password || 'postgres',
     database: config.database || 'postgres',
-    synchronize: false,
+    synchronize: true,
+    migrationsRun: true,
     logging: ['warn', 'error'],
+    subscribers: [
+        path_1.join(__dirname, "subscribers/**/*.ts")
+    ],
     migrations: [
         path_1.join(__dirname, 'migrations/*{.ts,.js}')
     ],
     cli: {
         migrationsDir: 'src/migrations'
-    }
+    },
 };
 module.exports = connectionOptions;
 //# sourceMappingURL=config.js.map

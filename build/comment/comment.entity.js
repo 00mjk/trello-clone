@@ -9,36 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.CommentTrello = void 0;
 var typeorm_1 = require("typeorm");
-var ColumnTrello_1 = require("./ColumnTrello");
-var User = /** @class */ (function () {
-    function User() {
+var card_entity_1 = require("../card/card.entity");
+var CommentTrello = /** @class */ (function () {
+    function CommentTrello() {
     }
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], User.prototype, "id", void 0);
+    ], CommentTrello.prototype, "id", void 0);
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], User.prototype, "email", void 0);
+    ], CommentTrello.prototype, "description", void 0);
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], User.prototype, "pass", void 0);
+    ], CommentTrello.prototype, "name", void 0);
     __decorate([
-        typeorm_1.Column({ default: false }),
-        __metadata("design:type", Boolean)
-    ], User.prototype, "isActive", void 0);
-    __decorate([
-        typeorm_1.OneToMany(function () { return ColumnTrello_1.ColumnTrello; }, function (ColumnTrello) { return ColumnTrello.user; }),
-        __metadata("design:type", Array)
-    ], User.prototype, "columns", void 0);
-    User = __decorate([
+        typeorm_1.ManyToOne(function () { return card_entity_1.CardTrello; }, function (cardTrello) { return cardTrello.comments; }),
+        __metadata("design:type", card_entity_1.CardTrello)
+    ], CommentTrello.prototype, "card", void 0);
+    CommentTrello = __decorate([
         typeorm_1.Entity()
-    ], User);
-    return User;
+    ], CommentTrello);
+    return CommentTrello;
 }());
-exports.User = User;
-//# sourceMappingURL=User.js.map
+exports.CommentTrello = CommentTrello;
+//# sourceMappingURL=comment.entity.js.map

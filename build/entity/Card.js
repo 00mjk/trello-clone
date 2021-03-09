@@ -9,36 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.CardTrello = void 0;
 var typeorm_1 = require("typeorm");
 var ColumnTrello_1 = require("./ColumnTrello");
-var User = /** @class */ (function () {
-    function User() {
+var Comment_1 = require("./Comment");
+var CardTrello = /** @class */ (function () {
+    function CardTrello() {
     }
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], User.prototype, "id", void 0);
+    ], CardTrello.prototype, "id", void 0);
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], User.prototype, "email", void 0);
+    ], CardTrello.prototype, "name", void 0);
     __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], User.prototype, "pass", void 0);
+        typeorm_1.ManyToOne(function () { return ColumnTrello_1.ColumnTrello; }, function (columnTrello) { return columnTrello.cards; }),
+        __metadata("design:type", ColumnTrello_1.ColumnTrello)
+    ], CardTrello.prototype, "column", void 0);
     __decorate([
-        typeorm_1.Column({ default: false }),
-        __metadata("design:type", Boolean)
-    ], User.prototype, "isActive", void 0);
-    __decorate([
-        typeorm_1.OneToMany(function () { return ColumnTrello_1.ColumnTrello; }, function (ColumnTrello) { return ColumnTrello.user; }),
+        typeorm_1.OneToMany(function () { return Comment_1.CommentTrello; }, function (comment) { return comment.card; }),
         __metadata("design:type", Array)
-    ], User.prototype, "columns", void 0);
-    User = __decorate([
+    ], CardTrello.prototype, "comments", void 0);
+    CardTrello = __decorate([
         typeorm_1.Entity()
-    ], User);
-    return User;
+    ], CardTrello);
+    return CardTrello;
 }());
-exports.User = User;
-//# sourceMappingURL=User.js.map
+exports.CardTrello = CardTrello;
+//# sourceMappingURL=Card.js.map

@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 var typeorm_1 = require("typeorm");
-var ColumnTrello_1 = require("./ColumnTrello");
+var column_entity_1 = require("../column/column.entity");
 var User = /** @class */ (function () {
     function User() {
     }
@@ -32,7 +32,7 @@ var User = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], User.prototype, "isActive", void 0);
     __decorate([
-        typeorm_1.OneToMany(function () { return ColumnTrello_1.ColumnTrello; }, function (ColumnTrello) { return ColumnTrello.user; }),
+        typeorm_1.OneToMany(function () { return column_entity_1.ColumnTrello; }, function (ColumnTrello) { return ColumnTrello.user; }),
         __metadata("design:type", Array)
     ], User.prototype, "columns", void 0);
     User = __decorate([
@@ -41,4 +41,4 @@ var User = /** @class */ (function () {
     return User;
 }());
 exports.User = User;
-//# sourceMappingURL=User.js.map
+//# sourceMappingURL=user.entity.js.map

@@ -32,4 +32,11 @@ const connectionOptions: ConnectionOptions = {
     },
 }
 
-export = connectionOptions
+const encryptOptions = {
+    soil: process.env.CRYPTO_SOIL
+}
+
+export =  {
+    connectionOptions,
+    encryptOptions
+}

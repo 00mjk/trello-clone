@@ -10,35 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-var typeorm_1 = require("typeorm");
-var column_entity_1 = require("../column/column.entity");
-var User = /** @class */ (function () {
-    function User() {
-    }
-    __decorate([
-        typeorm_1.PrimaryGeneratedColumn(),
-        __metadata("design:type", Number)
-    ], User.prototype, "id", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], User.prototype, "email", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], User.prototype, "pass", void 0);
-    __decorate([
-        typeorm_1.Column({ default: false }),
-        __metadata("design:type", Boolean)
-    ], User.prototype, "isActive", void 0);
-    __decorate([
-        typeorm_1.OneToMany(function () { return column_entity_1.ColumnTrello; }, function (ColumnTrello) { return ColumnTrello.user; }),
-        __metadata("design:type", Array)
-    ], User.prototype, "columns", void 0);
-    User = __decorate([
-        typeorm_1.Entity()
-    ], User);
-    return User;
-}());
+const typeorm_1 = require("typeorm");
+const column_entity_1 = require("../column/column.entity");
+let User = class User {
+};
+__decorate([
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    __metadata("design:type", String)
+], User.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
+    typeorm_1.Index({ unique: true }),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "username", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "pass", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.user),
+    __metadata("design:type", Array)
+], User.prototype, "columns", void 0);
+User = __decorate([
+    typeorm_1.Entity()
+], User);
 exports.User = User;
 //# sourceMappingURL=users.entity.js.map

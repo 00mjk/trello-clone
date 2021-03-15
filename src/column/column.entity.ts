@@ -4,7 +4,7 @@ import { User } from '../users/users.entity';
 
 @Entity()
 export class ColumnTrello {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column()

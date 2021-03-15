@@ -4,7 +4,7 @@ import { CommentTrello } from "../comment/comment.entity";
 
 @Entity()
 export class CardTrello {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: number;
 
     @Column()

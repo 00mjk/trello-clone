@@ -1,14 +1,16 @@
 "use strict";
-var path_1 = require("path");
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.jwtSecret = exports.encryptOptions = exports.connectionOptions = void 0;
+const path_1 = require("path");
 require('dotenv').config();
-var PROD_ENV = 'production';
-var config = {
+const PROD_ENV = 'production';
+const config = {
     host: 'localhost',
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
 };
-var connectionOptions = {
+exports.connectionOptions = {
     type: 'postgres',
     host: config.host,
     port: 5432,
@@ -28,5 +30,8 @@ var connectionOptions = {
         migrationsDir: 'src/migrations'
     },
 };
-module.exports = connectionOptions;
+exports.encryptOptions = {
+    soil: +(process.env.CRYPTO_SOIL) || 10
+};
+exports.jwtSecret = process.env.JWT_SECRET;
 //# sourceMappingURL=config.js.map

@@ -10,31 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentTrello = void 0;
-var typeorm_1 = require("typeorm");
-var card_entity_1 = require("../card/card.entity");
-var CommentTrello = /** @class */ (function () {
-    function CommentTrello() {
-    }
-    __decorate([
-        typeorm_1.PrimaryGeneratedColumn(),
-        __metadata("design:type", Number)
-    ], CommentTrello.prototype, "id", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], CommentTrello.prototype, "description", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], CommentTrello.prototype, "name", void 0);
-    __decorate([
-        typeorm_1.ManyToOne(function () { return card_entity_1.CardTrello; }, function (cardTrello) { return cardTrello.comments; }),
-        __metadata("design:type", card_entity_1.CardTrello)
-    ], CommentTrello.prototype, "card", void 0);
-    CommentTrello = __decorate([
-        typeorm_1.Entity()
-    ], CommentTrello);
-    return CommentTrello;
-}());
+const typeorm_1 = require("typeorm");
+const card_entity_1 = require("../card/card.entity");
+let CommentTrello = class CommentTrello {
+};
+__decorate([
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    __metadata("design:type", Number)
+], CommentTrello.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], CommentTrello.prototype, "description", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], CommentTrello.prototype, "name", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => card_entity_1.CardTrello, cardTrello => cardTrello.comments),
+    __metadata("design:type", card_entity_1.CardTrello)
+], CommentTrello.prototype, "card", void 0);
+CommentTrello = __decorate([
+    typeorm_1.Entity()
+], CommentTrello);
 exports.CommentTrello = CommentTrello;
 //# sourceMappingURL=comment.entity.js.map

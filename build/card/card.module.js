@@ -7,14 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardModule = void 0;
-var common_1 = require("@nestjs/common");
-var CardModule = /** @class */ (function () {
-    function CardModule() {
-    }
-    CardModule = __decorate([
-        common_1.Module({})
-    ], CardModule);
-    return CardModule;
-}());
+const common_1 = require("@nestjs/common");
+let CardModule = class CardModule {
+};
+CardModule = __decorate([
+    common_1.Module({})
+], CardModule);
 exports.CardModule = CardModule;
 //# sourceMappingURL=card.module.js.map

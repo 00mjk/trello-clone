@@ -7,14 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColumnModule = void 0;
-var common_1 = require("@nestjs/common");
-var ColumnModule = /** @class */ (function () {
-    function ColumnModule() {
-    }
-    ColumnModule = __decorate([
-        common_1.Module({})
-    ], ColumnModule);
-    return ColumnModule;
-}());
+const common_1 = require("@nestjs/common");
+let ColumnModule = class ColumnModule {
+};
+ColumnModule = __decorate([
+    common_1.Module({})
+], ColumnModule);
 exports.ColumnModule = ColumnModule;
 //# sourceMappingURL=column.module.js.map

@@ -10,32 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardTrello = void 0;
-var typeorm_1 = require("typeorm");
-var column_entity_1 = require("../column/column.entity");
-var comment_entity_1 = require("../comment/comment.entity");
-var CardTrello = /** @class */ (function () {
-    function CardTrello() {
-    }
-    __decorate([
-        typeorm_1.PrimaryGeneratedColumn(),
-        __metadata("design:type", Number)
-    ], CardTrello.prototype, "id", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], CardTrello.prototype, "name", void 0);
-    __decorate([
-        typeorm_1.ManyToOne(function () { return column_entity_1.ColumnTrello; }, function (columnTrello) { return columnTrello.cards; }),
-        __metadata("design:type", column_entity_1.ColumnTrello)
-    ], CardTrello.prototype, "column", void 0);
-    __decorate([
-        typeorm_1.OneToMany(function () { return comment_entity_1.CommentTrello; }, function (comment) { return comment.card; }),
-        __metadata("design:type", Array)
-    ], CardTrello.prototype, "comments", void 0);
-    CardTrello = __decorate([
-        typeorm_1.Entity()
-    ], CardTrello);
-    return CardTrello;
-}());
+const typeorm_1 = require("typeorm");
+const column_entity_1 = require("../column/column.entity");
+const comment_entity_1 = require("../comment/comment.entity");
+let CardTrello = class CardTrello {
+};
+__decorate([
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    __metadata("design:type", Number)
+], CardTrello.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], CardTrello.prototype, "name", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => column_entity_1.ColumnTrello, columnTrello => columnTrello.cards),
+    __metadata("design:type", column_entity_1.ColumnTrello)
+], CardTrello.prototype, "column", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => comment_entity_1.CommentTrello, comment => comment.card),
+    __metadata("design:type", Array)
+], CardTrello.prototype, "comments", void 0);
+CardTrello = __decorate([
+    typeorm_1.Entity()
+], CardTrello);
 exports.CardTrello = CardTrello;
 //# sourceMappingURL=card.entity.js.map

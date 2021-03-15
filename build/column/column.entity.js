@@ -10,32 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColumnTrello = void 0;
-var typeorm_1 = require("typeorm");
-var card_entity_1 = require("../card/card.entity");
-var users_entity_1 = require("../users/users.entity");
-var ColumnTrello = /** @class */ (function () {
-    function ColumnTrello() {
-    }
-    __decorate([
-        typeorm_1.PrimaryGeneratedColumn(),
-        __metadata("design:type", Number)
-    ], ColumnTrello.prototype, "id", void 0);
-    __decorate([
-        typeorm_1.Column(),
-        __metadata("design:type", String)
-    ], ColumnTrello.prototype, "name", void 0);
-    __decorate([
-        typeorm_1.ManyToOne(function () { return users_entity_1.User; }, function (user) { return user.columns; }),
-        __metadata("design:type", users_entity_1.User)
-    ], ColumnTrello.prototype, "user", void 0);
-    __decorate([
-        typeorm_1.OneToMany(function () { return card_entity_1.CardTrello; }, function (card) { return card.column; }),
-        __metadata("design:type", Array)
-    ], ColumnTrello.prototype, "cards", void 0);
-    ColumnTrello = __decorate([
-        typeorm_1.Entity()
-    ], ColumnTrello);
-    return ColumnTrello;
-}());
+const typeorm_1 = require("typeorm");
+const card_entity_1 = require("../card/card.entity");
+const users_entity_1 = require("../users/users.entity");
+let ColumnTrello = class ColumnTrello {
+};
+__decorate([
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    __metadata("design:type", Number)
+], ColumnTrello.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], ColumnTrello.prototype, "name", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => users_entity_1.User, user => user.columns),
+    __metadata("design:type", users_entity_1.User)
+], ColumnTrello.prototype, "user", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => card_entity_1.CardTrello, card => card.column),
+    __metadata("design:type", Array)
+], ColumnTrello.prototype, "cards", void 0);
+ColumnTrello = __decorate([
+    typeorm_1.Entity()
+], ColumnTrello);
 exports.ColumnTrello = ColumnTrello;
 //# sourceMappingURL=column.entity.js.map

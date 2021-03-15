@@ -7,13 +7,11 @@ import { UsersModule } from './users/users.module';
 import { ColumnModule } from './column/column.module';
 import { CardModule } from './card/card.module';
 import { CommentModule } from './comment/comment.module';
-import * as connectionOptions from './config/config';
-import { UsersController } from './users/users.controller';
-import { Connection } from 'typeorm';
 import { User } from './users/users.entity';
 import { ColumnTrello } from './column/column.entity';
 import { CommentTrello } from './comment/comment.entity';
 import { CardTrello } from './card/card.entity';
+import { connectionOptions } from './config/config';
 
 @Module({
   imports: [
@@ -30,9 +28,7 @@ import { CardTrello } from './card/card.entity';
     ColumnModule,
     CardModule,
     CommentModule
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {
 }

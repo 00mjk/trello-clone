@@ -10,17 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
-var common_1 = require("@nestjs/common");
-var users_service_1 = require("./users.service");
-var UsersController = /** @class */ (function () {
-    function UsersController(userService) {
+const common_1 = require("@nestjs/common");
+const users_service_1 = require("./users.service");
+let UsersController = class UsersController {
+    constructor(userService) {
         this.userService = userService;
     }
-    UsersController = __decorate([
-        common_1.Controller('users'),
-        __metadata("design:paramtypes", [users_service_1.UsersService])
-    ], UsersController);
-    return UsersController;
-}());
+};
+UsersController = __decorate([
+    common_1.Controller('users'),
+    __metadata("design:paramtypes", [users_service_1.UsersService])
+], UsersController);
 exports.UsersController = UsersController;
 //# sourceMappingURL=users.controller.js.map

@@ -34,19 +34,23 @@ let AuthService = class AuthService {
         const isValidate = await this.validateUser(signInDto.email, signInDto.password);
         const payload = { username: isValidate.username, sub: isValidate.id };
         const token = this.jwtService.sign(payload);
-        return { isValidate, access_token: token };
+        return { user_info: { ...isValidate }, access_token: token };
     }
     async signUp(signUpDto) {
         const isValidate = await this.validateUser(signUpDto.email, signUpDto.password);
-        if (isValidate === null && signUpDto.password === signUpDto.passwordConfirmation) {
-            const hashPass = await bcrypt.hash(signUpDto.password, config_1.encryptOptions.soil);
-            console.log(hashPass);
-            const payload = { username: signUpDto.username, sub: signUpDto.email };
-            await this.usersService.save(signUpDto.email, hashPass, signUpDto.username);
-            return {
-                access_token: this.jwtService.sign(payload),
-            };
+        if (!isValidate) {
+            if (signUpDto.password === signUpDto.passwordConfirmation) {
+                const hashPass = await bcrypt.hash(signUpDto.password, config_1.encryptOptions.soil);
+                console.log(hashPass);
+                const payload = { username: signUpDto.username, sub: signUpDto.email };
+                await this.usersService.save(signUpDto.email, hashPass, signUpDto.username);
+                return {
+                    access_token: this.jwtService.sign(payload),
+                };
+            }
+            throw new common_1.BadRequestException('passwords do not match');
         }
+        throw new common_1.BadRequestException('User with email already exsist');
     }
 };
 AuthService = __decorate([

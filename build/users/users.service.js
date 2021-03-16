@@ -16,11 +16,13 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const column_entity_1 = require("../entity/column.entity");
 const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./users.entity");
 let UsersService = class UsersService {
-    constructor(usersRepository) {
+    constructor(usersRepository, columnRepository) {
         this.usersRepository = usersRepository;
+        this.columnRepository = columnRepository;
     }
     findAll() {
         return this.usersRepository.find();
@@ -34,18 +36,39 @@ let UsersService = class UsersService {
     async save(email, pass, username) {
         await this.usersRepository.save({ email, pass, username });
     }
-    async getUserInfo(userId, paramId) {
+    async getUserProfile(userId, paramId) {
         if (userId !== paramId) {
             throw new common_1.UnauthorizedException("Unathorized");
         }
         const user = await this.usersRepository.findOne({ id: userId });
+        return user;
+    }
+    async getUserInfo(userId, paramId) {
+        const user = await this.getUserProfile(userId, paramId);
         return new get_profile_dto_1.GetProfileDto(user.username, user.email, user.id);
+    }
+    async createColumn(userId, paramId, createColumnDto) {
+        const user = await this.getUserProfile(userId, paramId);
+        await this.columnRepository.save({ user: user, name: createColumnDto.name });
+    }
+    async getAllColumn(user) {
+        return this.columnRepository.find({
+            relations: ['user'],
+            where: { user: { id: user.id } },
+        });
+    }
+    async getUserColumns(userId, paramId) {
+        const user = await this.getUserProfile(userId, paramId);
+        const columns = await this.getAllColumn(user);
+        return columns;
     }
 };
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(users_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, typeorm_1.InjectRepository(column_entity_1.ColumnTrello)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

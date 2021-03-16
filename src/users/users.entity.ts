@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn, Index } from 'typeorm';
-import { ColumnTrello } from '../column/column.entity';
+import { ColumnTrello } from '../entity/column.entity';
 
 
 @Entity()

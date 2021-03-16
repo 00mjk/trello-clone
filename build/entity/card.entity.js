@@ -9,34 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.CardTrello = void 0;
 const typeorm_1 = require("typeorm");
-const column_entity_1 = require("../entity/column.entity");
-let User = class User {
+const column_entity_1 = require("./column.entity");
+const comment_entity_1 = require("./comment.entity");
+let CardTrello = class CardTrello {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn('uuid'),
-    __metadata("design:type", String)
-], User.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column(),
-    typeorm_1.Index({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+    __metadata("design:type", Number)
+], CardTrello.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "username", void 0);
+], CardTrello.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "pass", void 0);
+    typeorm_1.ManyToOne(() => column_entity_1.ColumnTrello, columnTrello => columnTrello.cards),
+    __metadata("design:type", column_entity_1.ColumnTrello)
+], CardTrello.prototype, "column", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.user),
+    typeorm_1.OneToMany(() => comment_entity_1.CommentTrello, comment => comment.card),
     __metadata("design:type", Array)
-], User.prototype, "columns", void 0);
-User = __decorate([
+], CardTrello.prototype, "comments", void 0);
+CardTrello = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=users.entity.js.map
+], CardTrello);
+exports.CardTrello = CardTrello;
+//# sourceMappingURL=card.entity.js.map

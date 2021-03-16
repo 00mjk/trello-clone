@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { ColumnTrello } from "../column/column.entity";
-import { CommentTrello } from "../comment/comment.entity";
+import { ColumnTrello } from "./column.entity";
+import { CommentTrello } from "./comment.entity";
 
 @Entity()
 export class CardTrello {

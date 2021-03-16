@@ -15,14 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/auth.guard");
+const create_column_dto_1 = require("./dto/create-column.dto");
 const users_service_1 = require("./users.service");
 let UsersController = class UsersController {
     constructor(userService) {
         this.userService = userService;
     }
     getUser(req) {
-        console.log();
         return this.userService.getUserInfo(req.user.userId, req.params.id);
+    }
+    getUserAllColumns(req) {
+        return this.userService.getUserColumns(req.user.userId, req.params.id);
+    }
+    getUserColumn(req) {
+    }
+    createColumn(req, body) {
+        return this.userService.createColumn(req.user.userId, req.params.id, body);
     }
 };
 __decorate([
@@ -33,6 +41,30 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUser", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUserAllColumns", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column/:id"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUserColumn", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Post(":id/column"),
+    __param(0, common_1.Request()), __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "createColumn", null);
 UsersController = __decorate([
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

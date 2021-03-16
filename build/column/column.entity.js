@@ -32,7 +32,7 @@ __decorate([
     __metadata("design:type", Array)
 ], ColumnTrello.prototype, "cards", void 0);
 ColumnTrello = __decorate([
-    typeorm_1.Entity()
+    typeorm_1.Entity({ name: "column" })
 ], ColumnTrello);
 exports.ColumnTrello = ColumnTrello;
 //# sourceMappingURL=column.entity.js.map

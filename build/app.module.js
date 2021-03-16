@@ -11,13 +11,10 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
-const column_module_1 = require("./column/column.module");
-const card_module_1 = require("./card/card.module");
-const comment_module_1 = require("./comment/comment.module");
 const users_entity_1 = require("./users/users.entity");
-const column_entity_1 = require("./column/column.entity");
-const comment_entity_1 = require("./comment/comment.entity");
-const card_entity_1 = require("./card/card.entity");
+const column_entity_1 = require("./entity/column.entity");
+const comment_entity_1 = require("./entity/comment.entity");
+const card_entity_1 = require("./entity/card.entity");
 const config_1 = require("./config/config");
 let AppModule = class AppModule {
 };
@@ -35,9 +32,6 @@ AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
-            column_module_1.ColumnModule,
-            card_module_1.CardModule,
-            comment_module_1.CommentModule
         ]
     })
 ], AppModule);

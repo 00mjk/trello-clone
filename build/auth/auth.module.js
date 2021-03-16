@@ -15,6 +15,7 @@ const users_module_1 = require("../users/users.module");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("../config/config");
+const config_2 = require("@nestjs/config");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -24,11 +25,11 @@ AuthModule = __decorate([
             passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: config_1.jwtSecret,
-                signOptions: { expiresIn: '60s' },
+                signOptions: { expiresIn: '1000s' },
             }),
         ],
-        providers: [auth_service_1.AuthService, strategies_1.LocalStrategy],
-        exports: [auth_service_1.AuthService, jwt_1.JwtModule],
+        providers: [auth_service_1.AuthService, strategies_1.LocalStrategy, strategies_1.JwtStrategy, config_2.ConfigService],
+        exports: [auth_service_1.AuthService, jwt_1.JwtModule, config_2.ConfigService],
         controllers: [auth_controller_1.AuthController]
     })
 ], AuthModule);

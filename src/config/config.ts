@@ -36,4 +36,4 @@ export const encryptOptions = {
     soil: +(process.env.CRYPTO_SOIL) || 10
 }
 
-export const jwtSecret = process.env.JWT_SECRET
+export const jwtSecret:string = process.env.JWT_SECRET

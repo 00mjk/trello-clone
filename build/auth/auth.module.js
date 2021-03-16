@@ -25,7 +25,7 @@ AuthModule = __decorate([
             passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: config_1.jwtSecret,
-                signOptions: { expiresIn: '1000s' },
+                signOptions: { expiresIn: '100000s' },
             }),
         ],
         providers: [auth_service_1.AuthService, strategies_1.LocalStrategy, strategies_1.JwtStrategy, config_2.ConfigService],

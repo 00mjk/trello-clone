@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '1000s' },
+      signOptions: { expiresIn: '100000s' },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, ConfigService],

@@ -21,7 +21,8 @@ let UsersController = class UsersController {
         this.userService = userService;
     }
     getUser(req) {
-        return "user";
+        console.log();
+        return this.userService.getUserInfo(req.user.userId, req.params.id);
     }
 };
 __decorate([

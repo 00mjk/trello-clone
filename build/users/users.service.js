@@ -16,6 +16,7 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./users.entity");
 let UsersService = class UsersService {
     constructor(usersRepository) {
@@ -32,6 +33,13 @@ let UsersService = class UsersService {
     }
     async save(email, pass, username) {
         await this.usersRepository.save({ email, pass, username });
+    }
+    async getUserInfo(userId, paramId) {
+        if (userId !== paramId) {
+            throw new common_1.UnauthorizedException("Unathorized");
+        }
+        const user = await this.usersRepository.findOne({ id: userId });
+        return new get_profile_dto_1.GetProfileDto(user.username, user.email, user.id);
     }
 };
 UsersService = __decorate([

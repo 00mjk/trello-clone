@@ -10,13 +10,13 @@ import { UpdateColumnDto } from './dto/update-column.dto';
 export class ColumnController {
     constructor(private readonly columnService: ColumnService){}
     @UseGuards(JwtAuthGuard)
-    @Get("/column")
+    @Get("/")
     getUserAllColumns(@Request() req){
         return this.columnService.getColumns(req.user.userId,req.params.id)
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get("/column/:column_id")
+    @Get("/:column_id")
     getUserColumn(@Request() req){
         return this.columnService.getOneColumn(req.user.userId,req.params.id,req.params.column_id)
     }
@@ -24,7 +24,7 @@ export class ColumnController {
 
     @ApiBody({ type: [CreateColumnDto] })
     @UseGuards(JwtAuthGuard)
-    @Post("/column")
+    @Post("/")
     createColumn(@Request() req,@Body(new ValidationPipe()) body: CreateColumnDto){
         return this.columnService.createColumn(req.user.userId,req.params.id)
     }
@@ -32,13 +32,13 @@ export class ColumnController {
 
     @ApiBody({ type: [UpdateColumnDto] })
     @UseGuards(JwtAuthGuard)
-    @Put("/column/:column_id/edit")
+    @Put("/:column_id/edit")
     updateColumn(@Request() req,@Body(new ValidationPipe()) body: UpdateColumnDto){
         return this.columnService.updateColumn(req.user.userId,req.params.id,body)
     }
 
     @UseGuards(JwtAuthGuard)
-    @Delete("/column/:column_id/remove")
+    @Delete("/:column_id/remove")
     removeColumn(@Request() req){
         return this.columnService.removeColumn(req.user.userId,req.params.id,req.params.column_id)
     }

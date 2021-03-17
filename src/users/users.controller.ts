@@ -20,7 +20,7 @@ export class UsersController {
     
 
     @UseGuards(JwtAuthGuard)
-    @Get(":id")
+    @Get("/:id")
     getUser(@Request() req){
         return this.userService.getUserInfo(req.user.userId,req.params.id)
     }
@@ -28,40 +28,7 @@ export class UsersController {
  
     
 /*
-    @UseGuards(JwtAuthGuard)
-    @Get(":id/column/:column_id/cards")
-    getAllCards(@Request() req){
-        return this.userService.getCards(req.user.userId,req.params.id,req.params.column_id)
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Get(":id/column/:column_id/cards/:card_id")
-    getCard(@Request() req){
-        return this.userService.getOneCard(req.user.userId,req.params.id,req.params.column_id,req.params.card_id)
-    }
-
-
-    @ApiBody({ type: [CreateCardDto] })
-    @UseGuards(JwtAuthGuard)
-    @Post(":id/column/:column_id/cards")
-    createCard(@Request() req,@Body(new ValidationPipe()) body: CreateCardDto){
-        return this.userService.createCards(req.user.userId,req.params.id,req.params.column_id,body)
-    }
-
-
-    @ApiBody({ type: [UpdateCardDto] })
-    @UseGuards(JwtAuthGuard)
-    @Put(":id/column/:column_id/cards/:card_id/edit")
-    updateCard(@Request() req,@Body(new ValidationPipe()) body: UpdateCardDto){
-        return this.userService.updateCards(req.user.userId,req.params.id,req.params.column_id,body)
-    }
-
-
-    @UseGuards(JwtAuthGuard)
-    @Delete(":id/column/:column_id/cards/:card_id/remove")
-    deleteCard(@Request() req){
-        return this.userService.deleteCard(req.user.userId,req.params.id,req.params.column_id,req.params.card_id)
-    }
+   
 
     //Comments
     @UseGuards(JwtAuthGuard)

@@ -26,14 +26,14 @@ const routes = [
         module: users_module_1.UsersModule,
         children: [
             {
-                path: '/column',
+                path: '/:userId/column',
                 module: column_module_1.ColumnModule,
                 children: [{
-                        path: '/cards',
+                        path: '/:columnId/cards',
                         module: card_module_1.CardModule,
                         children: [
                             {
-                                path: "/comments",
+                                path: "/:cardId/comments",
                                 module: comment_module_1.CommentModule,
                             }
                         ]

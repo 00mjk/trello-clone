@@ -18,8 +18,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @InjectRepository(CardTrello)
-    private cardRepository: Repository<CardTrello>,
     @InjectRepository(CommentTrello)
     private commentRepository: Repository<CommentTrello>
   ) { }

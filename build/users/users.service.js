@@ -18,12 +18,10 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./entity/users.entity");
-const card_entity_1 = require("../card/entity/card.entity");
 const comment_entity_1 = require("../comment/entity/comment.entity");
 let UsersService = class UsersService {
-    constructor(usersRepository, cardRepository, commentRepository) {
+    constructor(usersRepository, commentRepository) {
         this.usersRepository = usersRepository;
-        this.cardRepository = cardRepository;
         this.commentRepository = commentRepository;
     }
     findAll() {
@@ -53,10 +51,8 @@ let UsersService = class UsersService {
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(users_entity_1.User)),
-    __param(1, typeorm_1.InjectRepository(card_entity_1.CardTrello)),
-    __param(2, typeorm_1.InjectRepository(comment_entity_1.CommentTrello)),
+    __param(1, typeorm_1.InjectRepository(comment_entity_1.CommentTrello)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
         typeorm_2.Repository])
 ], UsersService);
 exports.UsersService = UsersService;

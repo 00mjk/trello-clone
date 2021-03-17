@@ -12,32 +12,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnController = void 0;
+exports.CardController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/auth.guard");
-const validation_pipe_1 = require("../shared/pipes/validation.pipe");
-const column_service_1 = require("./column.service");
-const create_column_dto_1 = require("./dto/create-column.dto");
-const update_column_dto_1 = require("./dto/update-column.dto");
-let ColumnController = class ColumnController {
-    constructor(columnService) {
-        this.columnService = columnService;
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const card_entity_1 = require("./entity/card.entity");
+const update_card_dto_1 = require("./dto/update-card.dto");
+const create_card_dto_1 = require("./dto/create-card.dto");
+const validation_pipe_1 = require("@nestjs/common/pipes/validation.pipe");
+let CardController = class CardController {
+    constructor(cardRepository) {
+        this.cardRepository = cardRepository;
     }
-    getUserAllColumns(req) {
-        return this.columnService.getColumns(req.user.userId, req.params.id);
+    getAllCards(req) {
+        return this.cardRepository.getCards(req.user.userId, req.params.id, req.params.column_id);
     }
-    getUserColumn(req) {
-        return this.columnService.getOneColumn(req.user.userId, req.params.id, req.params.column_id);
+    getCard(req) {
+        return this.cardRepository.getOneCard(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
     }
-    createColumn(req, body) {
-        return this.columnService.createColumn(req.user.userId, req.params.id);
+    createCard(req, body) {
+        return this.cardRepository.createCards(req.user.userId, req.params.id, req.params.column_id, body);
     }
-    updateColumn(req, body) {
-        return this.columnService.updateColumn(req.user.userId, req.params.id, body);
+    updateCard(req, body) {
+        return this.cardRepository.updateCards(req.user.userId, req.params.id, req.params.column_id, body);
     }
-    removeColumn(req) {
-        return this.columnService.removeColumn(req.user.userId, req.params.id, req.params.column_id);
+    deleteCard(req) {
+        return this.cardRepository.deleteCard(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
     }
 };
 __decorate([
@@ -47,44 +49,45 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], ColumnController.prototype, "getUserAllColumns", null);
+], CardController.prototype, "getAllCards", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Get("/:column_id"),
+    common_1.Get("/:card_id"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], ColumnController.prototype, "getUserColumn", null);
+], CardController.prototype, "getCard", null);
 __decorate([
-    swagger_1.ApiBody({ type: [create_column_dto_1.CreateColumnDto] }),
+    swagger_1.ApiBody({ type: [create_card_dto_1.CreateCardDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Post("/"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
+    __metadata("design:paramtypes", [Object, create_card_dto_1.CreateCardDto]),
     __metadata("design:returntype", void 0)
-], ColumnController.prototype, "createColumn", null);
+], CardController.prototype, "createCard", null);
 __decorate([
-    swagger_1.ApiBody({ type: [update_column_dto_1.UpdateColumnDto] }),
+    swagger_1.ApiBody({ type: [update_card_dto_1.UpdateCardDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Put("/:column_id/edit"),
+    common_1.Put("/:card_id/edit"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_column_dto_1.UpdateColumnDto]),
+    __metadata("design:paramtypes", [Object, update_card_dto_1.UpdateCardDto]),
     __metadata("design:returntype", void 0)
-], ColumnController.prototype, "updateColumn", null);
+], CardController.prototype, "updateCard", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Delete("/:column_id/remove"),
+    common_1.Delete(":id/column/:column_id/cards/:card_id/remove"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], ColumnController.prototype, "removeColumn", null);
-ColumnController = __decorate([
+], CardController.prototype, "deleteCard", null);
+CardController = __decorate([
     common_1.Controller('/'),
-    __metadata("design:paramtypes", [column_service_1.ColumnService])
-], ColumnController);
-exports.ColumnController = ColumnController;
-//# sourceMappingURL=column.controller.js.map
+    __param(0, typeorm_1.InjectRepository(card_entity_1.CardTrello)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
+], CardController);
+exports.CardController = CardController;
+//# sourceMappingURL=card.controller.js.map

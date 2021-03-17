@@ -27,7 +27,7 @@ let UsersController = class UsersController {
 };
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Get(":id"),
+    common_1.Get("/:id"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

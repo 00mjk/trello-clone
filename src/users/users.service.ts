@@ -1,6 +1,6 @@
 import { BadRequestException, Get, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { ColumnTrello } from '../column/entity/column.entity';
 import { CreateColumnDto } from '../column/dto/create-column.dto';
 import { GetProfileDto } from './dto/get-profile.dto';
@@ -9,6 +9,9 @@ import { UpdateColumnDto } from '../column/dto/update-column.dto';
 import { CardTrello } from '../card/entity/card.entity';
 import { CreateCardDto } from '../card/dto/create-card.dto';
 import { UpdateCardDto } from '../card/dto/update-card.dto';
+import { CommentTrello } from '../comment/entity/comment.entity';
+import { CreateCommentDto } from '../comment/dto/create-comment.dto';
+import { UpdateCommentDto } from '../comment/dto/update-comment.dto';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,9 @@ export class UsersService {
     @InjectRepository(ColumnTrello)
     private columnRepository: Repository<ColumnTrello>,
     @InjectRepository(CardTrello)
-    private cardRepository: Repository<CardTrello>
+    private cardRepository: Repository<CardTrello>,
+    @InjectRepository(CommentTrello)
+    private commentRepository: Repository<CommentTrello>
   ) { }
 
   findAll(): Promise<User[]> {
@@ -129,5 +134,41 @@ export class UsersService {
     const column = await this.getOneColumn(userId,paramId,columnId)
     let card = await this.getOneCard(userId,paramId,column.id,cardId)
     await this.cardRepository.delete(card)
+  }
+
+  // Cards
+
+  async getAllComments(userId?: string, paramId?: string, columnId?: string,cardId?:string): Promise<CommentTrello[]> {
+    const card = await this.getOneCard(userId,paramId,columnId,cardId)
+    const comments = await this.commentRepository.find({
+      relations: ['card'],
+      where: { card: { id: card.id } },
+    })
+    return comments;
+  }
+
+  async getComment(userId?: string, paramId?: string, columnId?: string,cardId?:string,commentId?:string): Promise<CommentTrello> {
+    const card = await this.getOneCard(userId,paramId,columnId,cardId)
+    const comment = await this.commentRepository.findOne({
+      where: {card: {id: card.id },id: commentId,}
+    })
+    return comment;
+  }
+
+  async createComment(userId?: string, paramId?: string, columnId?: string,cardId?:string,createCommentDto?:CreateCommentDto): Promise<void> {
+    const card = await this.getOneCard(userId,paramId,columnId,cardId)
+    await this.commentRepository.save({card,name:createCommentDto.name,description:createCommentDto.description})
+  }
+
+  async updateComment(userId?: string, paramId?: string, columnId?: string,cardId?:string,updateCommentDto?:UpdateCommentDto): Promise<void> {
+    let comment = await this.getComment(userId,paramId,columnId,cardId,updateCommentDto.id)
+    comment.description = updateCommentDto.description
+    comment.name = updateCommentDto.name
+    await this.commentRepository.save(comment)
+  }
+
+  async deleteComment(userId?: string, paramId?: string, columnId?: string,cardId?:string,commentId?:string): Promise<void> {
+    const comment = await this.getComment(userId,paramId,columnId,cardId,commentId)
+    await this.cardRepository.delete(comment)
   }
 }

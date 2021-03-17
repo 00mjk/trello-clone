@@ -19,6 +19,8 @@ const create_card_dto_1 = require("../card/dto/create-card.dto");
 const update_card_dto_1 = require("../card/dto/update-card.dto");
 const create_column_dto_1 = require("../column/dto/create-column.dto");
 const update_column_dto_1 = require("../column/dto/update-column.dto");
+const create_comment_dto_1 = require("../comment/dto/create-comment.dto");
+const update_comment_dto_1 = require("../comment/dto/update-comment.dto");
 const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 const users_service_1 = require("./users.service");
 let UsersController = class UsersController {
@@ -57,6 +59,22 @@ let UsersController = class UsersController {
     }
     deleteCard(req) {
         return this.userService.deleteCard(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
+    }
+    //Comments
+    getComments(req) {
+        return this.userService.getAllComments(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
+    }
+    getComment(req) {
+        return this.userService.getComment(req.user.userId, req.params.id, req.params.column_id, req.params.card_id, req.params.comment_id);
+    }
+    createComment(req, body) {
+        return this.userService.createComment(req.user.userId, req.params.id, req.params.column_id, req.params.card_id, body);
+    }
+    updateComment(req, body) {
+        return this.userService.updateComment(req.user.userId, req.params.id, req.params.column_id, req.params.card_id, body);
+    }
+    removeComment(req) {
+        return this.userService.deleteComment(req.user.userId, req.params.id, req.params.column_id, req.params.card_id, req.params.comment_id);
     }
 };
 __decorate([
@@ -147,6 +165,46 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "deleteCard", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column/:column_id/cards/:card_id/comments"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getComments", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column/:column_id/cards/:card_id/comments/:comment_id"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getComment", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Post(":id/column/:column_id/cards/:card_id/comments"),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, create_comment_dto_1.CreateCommentDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "createComment", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Put(":id/column/:column_id/cards/:card_id/comments/:comment_id/edit"),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_comment_dto_1.UpdateCommentDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "updateComment", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Delete(":id/column/:column_id/cards/:card_id/comments/:comment_id/remove"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "removeComment", null);
 UsersController = __decorate([
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

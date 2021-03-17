@@ -20,11 +20,13 @@ const column_entity_1 = require("../column/entity/column.entity");
 const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./entity/users.entity");
 const card_entity_1 = require("../card/entity/card.entity");
+const comment_entity_1 = require("../comment/entity/comment.entity");
 let UsersService = class UsersService {
-    constructor(usersRepository, columnRepository, cardRepository) {
+    constructor(usersRepository, columnRepository, cardRepository, commentRepository) {
         this.usersRepository = usersRepository;
         this.columnRepository = columnRepository;
         this.cardRepository = cardRepository;
+        this.commentRepository = commentRepository;
     }
     findAll() {
         return this.usersRepository.find();
@@ -110,13 +112,45 @@ let UsersService = class UsersService {
         let card = await this.getOneCard(userId, paramId, column.id, cardId);
         await this.cardRepository.delete(card);
     }
+    // Cards
+    async getAllComments(userId, paramId, columnId, cardId) {
+        const card = await this.getOneCard(userId, paramId, columnId, cardId);
+        const comments = await this.commentRepository.find({
+            relations: ['card'],
+            where: { card: { id: card.id } },
+        });
+        return comments;
+    }
+    async getComment(userId, paramId, columnId, cardId, commentId) {
+        const card = await this.getOneCard(userId, paramId, columnId, cardId);
+        const comment = await this.commentRepository.findOne({
+            where: { card: { id: card.id }, id: commentId, }
+        });
+        return comment;
+    }
+    async createComment(userId, paramId, columnId, cardId, createCommentDto) {
+        const card = await this.getOneCard(userId, paramId, columnId, cardId);
+        await this.commentRepository.save({ card, name: createCommentDto.name, description: createCommentDto.description });
+    }
+    async updateComment(userId, paramId, columnId, cardId, updateCommentDto) {
+        let comment = await this.getComment(userId, paramId, columnId, cardId, updateCommentDto.id);
+        comment.description = updateCommentDto.description;
+        comment.name = updateCommentDto.name;
+        await this.commentRepository.save(comment);
+    }
+    async deleteComment(userId, paramId, columnId, cardId, commentId) {
+        const comment = await this.getComment(userId, paramId, columnId, cardId, commentId);
+        await this.cardRepository.delete(comment);
+    }
 };
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(users_entity_1.User)),
     __param(1, typeorm_1.InjectRepository(column_entity_1.ColumnTrello)),
     __param(2, typeorm_1.InjectRepository(card_entity_1.CardTrello)),
+    __param(3, typeorm_1.InjectRepository(comment_entity_1.CommentTrello)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], UsersService);

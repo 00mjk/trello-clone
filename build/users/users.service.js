@@ -88,6 +88,28 @@ let UsersService = class UsersService {
             where: { column: { id: column.id } },
         });
     }
+    async getOneCard(userId, paramId, columnId, cardId) {
+        const column = await this.getOneColumn(userId, paramId, columnId);
+        const card = await this.cardRepository.findOne({
+            where: { column: { id: column.id }, id: cardId, }
+        });
+        return card;
+    }
+    async createCards(userId, paramId, columnId, createCardDto) {
+        const column = await this.getOneColumn(userId, paramId, columnId);
+        await this.cardRepository.save({ column, name: createCardDto.name });
+    }
+    async updateCards(userId, paramId, columnId, updateCardDto) {
+        const column = await this.getOneColumn(userId, paramId, columnId);
+        let card = await this.getOneCard(userId, paramId, column.id, updateCardDto.id);
+        card.name = updateCardDto.name;
+        await this.cardRepository.save(card);
+    }
+    async deleteCard(userId, paramId, columnId, cardId) {
+        const column = await this.getOneColumn(userId, paramId, columnId);
+        let card = await this.getOneCard(userId, paramId, column.id, cardId);
+        await this.cardRepository.delete(card);
+    }
 };
 UsersService = __decorate([
     common_1.Injectable(),

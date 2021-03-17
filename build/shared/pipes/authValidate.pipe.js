@@ -6,15 +6,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidationPipe = void 0;
+exports.AuthValidationPipe = void 0;
 const common_1 = require("@nestjs/common");
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-let ValidationPipe = class ValidationPipe {
+let AuthValidationPipe = class AuthValidationPipe {
     async transform(value, { metatype }) {
         console.log(value);
         console.log(metatype);
-        if (!metatype || !this.toValidate(metatype)) {
+        if (!metatype) {
             return value;
         }
         const object = class_transformer_1.plainToClass(metatype, value);
@@ -24,13 +24,9 @@ let ValidationPipe = class ValidationPipe {
         }
         return value;
     }
-    toValidate(metatype) {
-        const types = [String, Boolean, Number, Array, Object];
-        return !types.includes(metatype);
-    }
 };
-ValidationPipe = __decorate([
+AuthValidationPipe = __decorate([
     common_1.Injectable()
-], ValidationPipe);
-exports.ValidationPipe = ValidationPipe;
-//# sourceMappingURL=validation.pipe.js.map
+], AuthValidationPipe);
+exports.AuthValidationPipe = AuthValidationPipe;
+//# sourceMappingURL=authValidate.pipe.js.map

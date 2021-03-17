@@ -1,5 +1,7 @@
 import { Controller, Get, UseGuards, Request, Body, Post, Put, Delete, UsePipes } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/auth.guard';
+import { CreateCardDto } from '../card/dto/create-card.dto';
+import { UpdateCardDto } from '../card/dto/update-card.dto';
 import { CreateColumnDto } from '../column/dto/create-column.dto';
 import { UpdateColumnDto } from '../column/dto/update-column.dto';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
@@ -53,5 +55,30 @@ export class UsersController {
         return this.userService.getCards(req.user.userId,req.params.id,req.params.column_id)
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Get(":id/column/:column_id/cards/:card_id")
+    getCard(@Request() req){
+        return this.userService.getOneCard(req.user.userId,req.params.id,req.params.column_id,req.params.card_id)
+    }
 
+    @UseGuards(JwtAuthGuard)
+    @Post(":id/column/:column_id/cards")
+    createCard(@Request() req,@Body(new ValidationPipe()) body: CreateCardDto){
+        return this.userService.createCards(req.user.userId,req.params.id,req.params.column_id,body)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put(":id/column/:column_id/cards/:card_id/edit")
+    updateCard(@Request() req,@Body(new ValidationPipe()) body: UpdateCardDto){
+        return this.userService.updateCards(req.user.userId,req.params.id,req.params.column_id,body)
+    }
+
+
+    @UseGuards(JwtAuthGuard)
+    @Delete(":id/column/:column_id/cards/:card_id/remove")
+    deleteCard(@Request() req){
+        return this.userService.deleteCard(req.user.userId,req.params.id,req.params.column_id,req.params.card_id)
+    }
+    
+   
 }

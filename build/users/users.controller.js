@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/auth.guard");
+const create_card_dto_1 = require("../card/dto/create-card.dto");
+const update_card_dto_1 = require("../card/dto/update-card.dto");
 const create_column_dto_1 = require("../column/dto/create-column.dto");
 const update_column_dto_1 = require("../column/dto/update-column.dto");
 const validation_pipe_1 = require("../shared/pipes/validation.pipe");
@@ -43,6 +45,18 @@ let UsersController = class UsersController {
     }
     getAllCards(req) {
         return this.userService.getCards(req.user.userId, req.params.id, req.params.column_id);
+    }
+    getCard(req) {
+        return this.userService.getOneCard(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
+    }
+    createCard(req, body) {
+        return this.userService.createCards(req.user.userId, req.params.id, req.params.column_id, body);
+    }
+    updateCard(req, body) {
+        return this.userService.updateCards(req.user.userId, req.params.id, req.params.column_id, body);
+    }
+    deleteCard(req) {
+        return this.userService.deleteCard(req.user.userId, req.params.id, req.params.column_id, req.params.card_id);
     }
 };
 __decorate([
@@ -101,6 +115,38 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getAllCards", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column/:column_id/cards/:card_id"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getCard", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Post(":id/column/:column_id/cards"),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, create_card_dto_1.CreateCardDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "createCard", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Put(":id/column/:column_id/cards/:card_id/edit"),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_card_dto_1.UpdateCardDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "updateCard", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Delete(":id/column/:column_id/cards/:card_id/remove"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "deleteCard", null);
 UsersController = __decorate([
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

@@ -7,6 +7,8 @@ import { GetProfileDto } from './dto/get-profile.dto';
 import { User } from './entity/users.entity';
 import { UpdateColumnDto } from '../column/dto/update-column.dto';
 import { CardTrello } from '../card/entity/card.entity';
+import { CreateCardDto } from '../card/dto/create-card.dto';
+import { UpdateCardDto } from '../card/dto/update-card.dto';
 
 @Injectable()
 export class UsersService {
@@ -100,5 +102,32 @@ export class UsersService {
       relations: ['column'],
       where: { column: { id: column.id } },
     })
+  }
+
+  async getOneCard(userId?: string, paramId?: string, columnId?: string,cardId?:string) :Promise<CardTrello> {
+    const column = await this.getOneColumn(userId,paramId,columnId)
+    const card = await this.cardRepository.findOne({
+      
+      where: {column: {id: column.id },id: cardId,}
+    })
+    return card
+  }
+
+  async createCards(userId?:string ,paramId?:string,columnId?:string,createCardDto?: CreateCardDto): Promise<void> {
+    const column = await this.getOneColumn(userId,paramId,columnId)
+     await this.cardRepository.save({column,name:createCardDto.name})
+  }
+
+  async updateCards(userId?:string ,paramId?:string,columnId?:string,updateCardDto?: UpdateCardDto): Promise<void> {
+    const column = await this.getOneColumn(userId,paramId,columnId)
+    let card = await this.getOneCard(userId,paramId,column.id,updateCardDto.id)
+    card.name = updateCardDto.name
+    await this.cardRepository.save(card)
+  }
+
+  async deleteCard(userId?: string, paramId?: string, columnId?: string,cardId?:string): Promise<void> {
+    const column = await this.getOneColumn(userId,paramId,columnId)
+    let card = await this.getOneCard(userId,paramId,column.id,cardId)
+    await this.cardRepository.delete(card)
   }
 }

@@ -26,40 +26,8 @@ export class UsersController {
     }
 
  
-    @UseGuards(JwtAuthGuard)
-    @Get(":id/column")
-    getUserAllColumns(@Request() req){
-        return this.userService.getColumns(req.user.userId,req.params.id)
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Get(":id/column/:column_id")
-    getUserColumn(@Request() req){
-        return this.userService.getOneColumn(req.user.userId,req.params.id,req.params.column_id)
-    }
-
-
-    @ApiBody({ type: [CreateColumnDto] })
-    @UseGuards(JwtAuthGuard)
-    @Post(":id/column")
-    createColumn(@Request() req,@Body(new ValidationPipe()) body: CreateColumnDto){
-        return this.userService.createColumn(req.user.userId,req.params.id,body)
-    }
-
-
-    @ApiBody({ type: [UpdateColumnDto] })
-    @UseGuards(JwtAuthGuard)
-    @Put(":id/column/:column_id/edit")
-    updateColumn(@Request() req,@Body(new ValidationPipe()) body: UpdateColumnDto){
-        return this.userService.updateColumn(req.user.userId,req.params.id,body)
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Delete(":id/column/:column_id/remove")
-    removeColumn(@Request() req){
-        return this.userService.removeColumn(req.user.userId,req.params.id,req.params.column_id)
-    }
-
+    
+/*
     @UseGuards(JwtAuthGuard)
     @Get(":id/column/:column_id/cards")
     getAllCards(@Request() req){
@@ -129,5 +97,5 @@ export class UsersController {
     @Delete(":id/column/:column_id/cards/:card_id/comments/:comment_id/remove")
     removeComment(@Request() req){
         return this.userService.deleteComment(req.user.userId,req.params.id,req.params.column_id,req.params.card_id,req.params.comment_id)
-    }
+    }*/
 }

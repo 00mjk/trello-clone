@@ -8,14 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColumnModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const column_service_1 = require("./column.service");
+const column_entity_1 = require("./entity/column.entity");
+const column_controller_1 = require("./column.controller");
 let ColumnModule = class ColumnModule {
 };
 ColumnModule = __decorate([
     common_1.Module({
+        imports: [typeorm_1.TypeOrmModule.forFeature([column_entity_1.ColumnTrello])],
         providers: [column_service_1.ColumnService],
-        imports: [column_service_1.ColumnService],
-        exports: [column_service_1.ColumnService]
+        exports: [column_service_1.ColumnService],
+        controllers: [column_controller_1.ColumnController]
     })
 ], ColumnModule);
 exports.ColumnModule = ColumnModule;

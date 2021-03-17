@@ -18,8 +18,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @InjectRepository(ColumnTrello)
-    private columnRepository: Repository<ColumnTrello>,
     @InjectRepository(CardTrello)
     private cardRepository: Repository<CardTrello>,
     @InjectRepository(CommentTrello)
@@ -59,7 +57,7 @@ export class UsersService {
 
   //columns 
 
-  async createColumn(userId?: string, paramId?: string, createColumnDto?: CreateColumnDto): Promise<void> {
+  /*async createColumn(userId?: string, paramId?: string, createColumnDto?: CreateColumnDto): Promise<void> {
     const user = await this.validateUser(userId, paramId)
     await this.columnRepository.save({ user: user, name: createColumnDto.name })
   }
@@ -170,5 +168,5 @@ export class UsersService {
   async deleteComment(userId?: string, paramId?: string, columnId?: string,cardId?:string,commentId?:string): Promise<void> {
     const comment = await this.getComment(userId,paramId,columnId,cardId,commentId)
     await this.cardRepository.delete(comment)
-  }
+  }*/
 }

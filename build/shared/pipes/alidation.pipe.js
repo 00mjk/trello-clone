@@ -6,22 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtAuthGuard = void 0;
+exports.ValidationPipe = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
-let JwtAuthGuard = class JwtAuthGuard extends passport_1.AuthGuard('jwt') {
-    canActivate(context) {
-        return super.canActivate(context);
-    }
-    handleRequest(err, user, info) {
-        if (err || !user) {
-            throw err || new common_1.UnauthorizedException();
-        }
-        return user;
+let ValidationPipe = class ValidationPipe {
+    transform(value, metadata) {
+        console.log(value);
+        console.log(metadata);
+        return value;
     }
 };
-JwtAuthGuard = __decorate([
+ValidationPipe = __decorate([
     common_1.Injectable()
-], JwtAuthGuard);
-exports.JwtAuthGuard = JwtAuthGuard;
-//# sourceMappingURL=auth.guard.js.map
+], ValidationPipe);
+exports.ValidationPipe = ValidationPipe;
+//# sourceMappingURL=alidation.pipe.js.map

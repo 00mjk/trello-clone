@@ -32,6 +32,7 @@
       "@types/react": "^17.0.3",
       "@types/react-dom": "^17.0.2",
       "bcrypt": "^5.0.1",
+      "class-transformer": "^0.4.0",
       "class-validator": "^0.13.1",
       "dotenv": "^8.2.0",
       "fastify-swagger": "^4.4.2",

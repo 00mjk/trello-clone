@@ -19,10 +19,12 @@ const typeorm_2 = require("typeorm");
 const column_entity_1 = require("../column/entity/column.entity");
 const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./entity/users.entity");
+const card_entity_1 = require("../card/entity/card.entity");
 let UsersService = class UsersService {
-    constructor(usersRepository, columnRepository) {
+    constructor(usersRepository, columnRepository, cardRepository) {
         this.usersRepository = usersRepository;
         this.columnRepository = columnRepository;
+        this.cardRepository = cardRepository;
     }
     findAll() {
         return this.usersRepository.find();
@@ -36,7 +38,7 @@ let UsersService = class UsersService {
     async save(email, pass, username) {
         await this.usersRepository.save({ email, pass, username });
     }
-    async getUserProfile(userId, paramId) {
+    async validateUser(userId, paramId) {
         if (userId !== paramId) {
             throw new common_1.UnauthorizedException("Unathorized");
         }
@@ -44,15 +46,16 @@ let UsersService = class UsersService {
         return user;
     }
     async getUserInfo(userId, paramId) {
-        const user = await this.getUserProfile(userId, paramId);
+        const user = await this.validateUser(userId, paramId);
         return new get_profile_dto_1.GetProfileDto(user.username, user.email, user.id);
     }
+    //columns 
     async createColumn(userId, paramId, createColumnDto) {
-        const user = await this.getUserProfile(userId, paramId);
+        const user = await this.validateUser(userId, paramId);
         await this.columnRepository.save({ user: user, name: createColumnDto.name });
     }
     async getColumns(userId, paramId) {
-        const user = await this.getUserProfile(userId, paramId);
+        const user = await this.validateUser(userId, paramId);
         const columns = await this.columnRepository.find({
             relations: ['user'],
             where: { user: { id: user.id } },
@@ -60,29 +63,39 @@ let UsersService = class UsersService {
         return columns;
     }
     async getOneColumn(userId, paramId, columnId) {
-        const user = await this.getUserProfile(userId, paramId);
+        const user = await this.validateUser(userId, paramId);
         const column = await this.columnRepository.findOne({
             where: { user: { id: user.id }, id: columnId, }
         });
         return column;
     }
     async updateColumn(userId, paramId, updateColumnDto) {
-        const user = await this.getUserProfile(userId, paramId);
+        const user = await this.validateUser(userId, paramId);
         let column = await this.getOneColumn(userId, paramId, updateColumnDto.id);
         column.name = updateColumnDto.name;
         await this.columnRepository.save(column);
     }
     async removeColumn(userId, paramId, columnId) {
-        const user = await this.getUserProfile(userId, paramId);
+        await this.validateUser(userId, paramId);
         let column = await this.getOneColumn(userId, paramId, columnId);
         await this.columnRepository.delete(column);
+    }
+    // Cards
+    async getCards(userId, paramId, columnId) {
+        const column = await this.getOneColumn(userId, paramId, columnId);
+        return await this.cardRepository.find({
+            relations: ['column'],
+            where: { column: { id: column.id } },
+        });
     }
 };
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(users_entity_1.User)),
     __param(1, typeorm_1.InjectRepository(column_entity_1.ColumnTrello)),
+    __param(2, typeorm_1.InjectRepository(card_entity_1.CardTrello)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], UsersService);
 exports.UsersService = UsersService;

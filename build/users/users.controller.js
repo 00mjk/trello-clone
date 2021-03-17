@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/auth.guard");
 const create_column_dto_1 = require("../column/dto/create-column.dto");
 const update_column_dto_1 = require("../column/dto/update-column.dto");
+const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 const users_service_1 = require("./users.service");
 let UsersController = class UsersController {
     constructor(userService) {
@@ -39,6 +40,9 @@ let UsersController = class UsersController {
     }
     removeColumn(req) {
         return this.userService.removeColumn(req.user.userId, req.params.id, req.params.column_id);
+    }
+    getAllCards(req) {
+        return this.userService.getCards(req.user.userId, req.params.id, req.params.column_id);
     }
 };
 __decorate([
@@ -68,7 +72,7 @@ __decorate([
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Post(":id/column"),
-    __param(0, common_1.Request()), __param(1, common_1.Body()),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
     __metadata("design:returntype", void 0)
@@ -76,7 +80,7 @@ __decorate([
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Put(":id/column/:column_id/edit"),
-    __param(0, common_1.Request()), __param(1, common_1.Body()),
+    __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, update_column_dto_1.UpdateColumnDto]),
     __metadata("design:returntype", void 0)
@@ -89,6 +93,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "removeColumn", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Get(":id/column/:column_id/cards"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getAllCards", null);
 UsersController = __decorate([
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

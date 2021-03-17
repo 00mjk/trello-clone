@@ -1,11 +1,12 @@
 import { BadRequestException, Get, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ColumnTrello } from '../column/entity/column.entity';
 import { CreateColumnDto } from '../column/dto/create-column.dto';
 import { GetProfileDto } from './dto/get-profile.dto';
 import { User } from './entity/users.entity';
 import { UpdateColumnDto } from '../column/dto/update-column.dto';
+import { CardTrello } from '../card/entity/card.entity';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,8 @@ export class UsersService {
     private usersRepository: Repository<User>,
     @InjectRepository(ColumnTrello)
     private columnRepository: Repository<ColumnTrello>,
+    @InjectRepository(CardTrello)
+    private cardRepository: Repository<CardTrello>
   ) { }
 
   findAll(): Promise<User[]> {
@@ -32,7 +35,7 @@ export class UsersService {
     await this.usersRepository.save({ email, pass, username })
   }
 
-  private async getUserProfile(userId?: string, paramId?: string): Promise<User> {
+  private async validateUser(userId?: string, paramId?: string): Promise<User> {
     if (userId !== paramId) {
       throw new UnauthorizedException("Unathorized")
     }
@@ -42,20 +45,22 @@ export class UsersService {
   }
 
   async getUserInfo(userId?: string, paramId?: string): Promise<GetProfileDto> {
-    const user = await this.getUserProfile(userId, paramId)
+    const user = await this.validateUser(userId, paramId)
     return new GetProfileDto(user.username, user.email, user.id)
 
   }
 
+  //columns 
+
   async createColumn(userId?: string, paramId?: string, createColumnDto?: CreateColumnDto): Promise<void> {
-    const user = await this.getUserProfile(userId, paramId)
+    const user = await this.validateUser(userId, paramId)
     await this.columnRepository.save({ user: user, name: createColumnDto.name })
   }
 
 
 
   async getColumns(userId?: string, paramId?: string): Promise<ColumnTrello[]> {
-    const user = await this.getUserProfile(userId, paramId)
+    const user = await this.validateUser(userId, paramId)
     const columns = await this.columnRepository.find({
       relations: ['user'],
       where: { user: { id: user.id } },
@@ -64,7 +69,7 @@ export class UsersService {
   }
 
   async getOneColumn(userId?: string, paramId?: string, columnId?: string): Promise<ColumnTrello> {
-    const user = await this.getUserProfile(userId, paramId)
+    const user = await this.validateUser(userId, paramId)
     const column = await this.columnRepository.findOne({
       
       where: {user: {id: user.id },id: columnId,}
@@ -73,7 +78,7 @@ export class UsersService {
   }
 
   async updateColumn(userId?: string, paramId?: string, updateColumnDto?: UpdateColumnDto): Promise<void> {
-    const user = await this.getUserProfile(userId, paramId)
+    const user = await this.validateUser(userId, paramId)
     let column = await this.getOneColumn(userId,paramId,updateColumnDto.id)
     column.name = updateColumnDto.name
 
@@ -81,8 +86,19 @@ export class UsersService {
   }
 
   async removeColumn(userId?: string, paramId?: string, columnId?: string): Promise<void> {
-    const user = await this.getUserProfile(userId, paramId)
+    await this.validateUser(userId, paramId)
     let column = await this.getOneColumn(userId,paramId,columnId)
     await this.columnRepository.delete(column)
+  }
+
+
+  // Cards
+
+  async getCards(userId?: string, paramId?: string, columnId?: string): Promise<CardTrello[]> {
+    const column = await this.getOneColumn(userId,paramId,columnId)
+    return await this.cardRepository.find({
+      relations: ['column'],
+      where: { column: { id: column.id } },
+    })
   }
 }

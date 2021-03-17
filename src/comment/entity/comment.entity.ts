@@ -7,7 +7,6 @@ export class CommentTrello {
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
-
     @Column()
     description: string
     

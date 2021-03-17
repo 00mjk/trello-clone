@@ -9,29 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentTrello = void 0;
-const typeorm_1 = require("typeorm");
-const card_entity_1 = require("../users/card.entity");
-let CommentTrello = class CommentTrello {
-};
+exports.UpdateColumnDto = void 0;
+const class_validator_1 = require("class-validator");
+class UpdateColumnDto {
+}
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn('uuid'),
-    __metadata("design:type", Number)
-], CommentTrello.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column(),
+    class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
-], CommentTrello.prototype, "description", void 0);
+], UpdateColumnDto.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column(),
+    class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
-], CommentTrello.prototype, "name", void 0);
-__decorate([
-    typeorm_1.ManyToOne(() => card_entity_1.CardTrello, cardTrello => cardTrello.comments),
-    __metadata("design:type", card_entity_1.CardTrello)
-], CommentTrello.prototype, "card", void 0);
-CommentTrello = __decorate([
-    typeorm_1.Entity()
-], CommentTrello);
-exports.CommentTrello = CommentTrello;
-//# sourceMappingURL=comment.entity.js.map
+], UpdateColumnDto.prototype, "id", void 0);
+exports.UpdateColumnDto = UpdateColumnDto;
+//# sourceMappingURL=update-column.dto.js.map

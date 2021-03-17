@@ -6,17 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnModule = void 0;
-const common_1 = require("@nestjs/common");
-const column_service_1 = require("./column.service");
-let ColumnModule = class ColumnModule {
+exports.ColumnRepository = void 0;
+let ColumnRepository = class ColumnRepository {
 };
-ColumnModule = __decorate([
-    common_1.Module({
-        providers: [column_service_1.ColumnService],
-        imports: [column_service_1.ColumnService],
-        exports: [column_service_1.ColumnService]
-    })
-], ColumnModule);
-exports.ColumnModule = ColumnModule;
-//# sourceMappingURL=column.module.js.map
+ColumnRepository = __decorate([
+    InjectRepository(ColumnTrello)
+], ColumnRepository);
+exports.ColumnRepository = ColumnRepository;
+Repository();
+//# sourceMappingURL=column.repository.js.map

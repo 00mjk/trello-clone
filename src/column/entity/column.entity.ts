@@ -1,11 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
-import { CardTrello } from './card.entity';
-import { User } from '../users/users.entity';
+import { CardTrello } from '../../card/entity/card.entity';
+import { User } from '../../users/entity/users.entity';
+
 
 @Entity({name:"column"})
 export class ColumnTrello {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column()
     name: string;

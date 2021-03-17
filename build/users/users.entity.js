@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
-const column_entity_1 = require("../entity/column.entity");
+const column_entity_1 = require("../column/entity/column.entity");
 let User = class User {
 };
 __decorate([
@@ -32,11 +32,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "pass", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.user),
+    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.userId),
     __metadata("design:type", Array)
 ], User.prototype, "columns", void 0);
 User = __decorate([
-    typeorm_1.Entity()
+    typeorm_1.Entity({ name: "user" })
 ], User);
 exports.User = User;
 //# sourceMappingURL=users.entity.js.map

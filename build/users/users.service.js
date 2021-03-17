@@ -16,9 +16,9 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const column_entity_1 = require("../entity/column.entity");
+const column_entity_1 = require("../column/entity/column.entity");
 const get_profile_dto_1 = require("./dto/get-profile.dto");
-const users_entity_1 = require("./users.entity");
+const users_entity_1 = require("./entity/users.entity");
 let UsersService = class UsersService {
     constructor(usersRepository, columnRepository) {
         this.usersRepository = usersRepository;
@@ -51,16 +51,31 @@ let UsersService = class UsersService {
         const user = await this.getUserProfile(userId, paramId);
         await this.columnRepository.save({ user: user, name: createColumnDto.name });
     }
-    async getAllColumn(user) {
-        return this.columnRepository.find({
+    async getColumns(userId, paramId) {
+        const user = await this.getUserProfile(userId, paramId);
+        const columns = await this.columnRepository.find({
             relations: ['user'],
             where: { user: { id: user.id } },
         });
-    }
-    async getUserColumns(userId, paramId) {
-        const user = await this.getUserProfile(userId, paramId);
-        const columns = await this.getAllColumn(user);
         return columns;
+    }
+    async getOneColumn(userId, paramId, columnId) {
+        const user = await this.getUserProfile(userId, paramId);
+        const column = await this.columnRepository.findOne({
+            where: { user: { id: user.id }, id: columnId, }
+        });
+        return column;
+    }
+    async updateColumn(userId, paramId, updateColumnDto) {
+        const user = await this.getUserProfile(userId, paramId);
+        let column = await this.getOneColumn(userId, paramId, updateColumnDto.id);
+        column.name = updateColumnDto.name;
+        await this.columnRepository.save(column);
+    }
+    async removeColumn(userId, paramId, columnId) {
+        const user = await this.getUserProfile(userId, paramId);
+        let column = await this.getOneColumn(userId, paramId, columnId);
+        await this.columnRepository.delete(column);
     }
 };
 UsersService = __decorate([

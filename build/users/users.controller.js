@@ -15,7 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/auth.guard");
-const create_column_dto_1 = require("./dto/create-column.dto");
+const create_column_dto_1 = require("../column/dto/create-column.dto");
+const update_column_dto_1 = require("../column/dto/update-column.dto");
 const users_service_1 = require("./users.service");
 let UsersController = class UsersController {
     constructor(userService) {
@@ -25,12 +26,19 @@ let UsersController = class UsersController {
         return this.userService.getUserInfo(req.user.userId, req.params.id);
     }
     getUserAllColumns(req) {
-        return this.userService.getUserColumns(req.user.userId, req.params.id);
+        return this.userService.getColumns(req.user.userId, req.params.id);
     }
     getUserColumn(req) {
+        return this.userService.getOneColumn(req.user.userId, req.params.id, req.params.column_id);
     }
     createColumn(req, body) {
         return this.userService.createColumn(req.user.userId, req.params.id, body);
+    }
+    updateColumn(req, body) {
+        return this.userService.updateColumn(req.user.userId, req.params.id, body);
+    }
+    removeColumn(req) {
+        return this.userService.removeColumn(req.user.userId, req.params.id, req.params.column_id);
     }
 };
 __decorate([
@@ -51,7 +59,7 @@ __decorate([
 ], UsersController.prototype, "getUserAllColumns", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Get(":id/column/:id"),
+    common_1.Get(":id/column/:column_id"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -65,6 +73,22 @@ __decorate([
     __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createColumn", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Put(":id/column/:column_id/edit"),
+    __param(0, common_1.Request()), __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_column_dto_1.UpdateColumnDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "updateColumn", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
+    common_1.Delete(":id/column/:column_id/remove"),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "removeColumn", null);
 UsersController = __decorate([
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

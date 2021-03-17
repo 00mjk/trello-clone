@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn, Index } from 'typeorm';
-import { ColumnTrello } from '../entity/column.entity';
+import { ColumnTrello } from '../../column/entity/column.entity';
 
 
-@Entity()
+
+@Entity({name:"user"})
 export class User {
 
   @PrimaryGeneratedColumn('uuid')

@@ -1,4 +1,5 @@
-import { ColumnTrello } from "../../entity/column.entity"
+import { ColumnTrello } from "../../column/entity/column.entity"
+
 
 export class GetProfileDto {
     username?: string

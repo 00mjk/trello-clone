@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentTrello = void 0;
 const typeorm_1 = require("typeorm");
-const card_entity_1 = require("../users/card.entity");
+const card_entity_1 = require("../../card/entity/card.entity");
 let CommentTrello = class CommentTrello {
 };
 __decorate([

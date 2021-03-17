@@ -1,4 +1,5 @@
 import { Controller, Get, UseGuards, Request, Body, Post, Put, Delete, UsePipes } from '@nestjs/common';
+import {ApiBody,ApiBearerAuth,ApiTags} from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { CreateCardDto } from '../card/dto/create-card.dto';
 import { UpdateCardDto } from '../card/dto/update-card.dto';
@@ -9,6 +10,10 @@ import { UpdateCommentDto } from '../comment/dto/update-comment.dto';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { UsersService } from './users.service';
 
+
+  
+@ApiBearerAuth()
+@ApiTags('user')
 @Controller('users')
 export class UsersController {
     constructor(private readonly userService: UsersService) {}
@@ -33,12 +38,16 @@ export class UsersController {
         return this.userService.getOneColumn(req.user.userId,req.params.id,req.params.column_id)
     }
 
+
+    @ApiBody({ type: [CreateColumnDto] })
     @UseGuards(JwtAuthGuard)
     @Post(":id/column")
     createColumn(@Request() req,@Body(new ValidationPipe()) body: CreateColumnDto){
         return this.userService.createColumn(req.user.userId,req.params.id,body)
     }
 
+
+    @ApiBody({ type: [UpdateColumnDto] })
     @UseGuards(JwtAuthGuard)
     @Put(":id/column/:column_id/edit")
     updateColumn(@Request() req,@Body(new ValidationPipe()) body: UpdateColumnDto){
@@ -63,12 +72,16 @@ export class UsersController {
         return this.userService.getOneCard(req.user.userId,req.params.id,req.params.column_id,req.params.card_id)
     }
 
+
+    @ApiBody({ type: [CreateCardDto] })
     @UseGuards(JwtAuthGuard)
     @Post(":id/column/:column_id/cards")
     createCard(@Request() req,@Body(new ValidationPipe()) body: CreateCardDto){
         return this.userService.createCards(req.user.userId,req.params.id,req.params.column_id,body)
     }
 
+
+    @ApiBody({ type: [UpdateCardDto] })
     @UseGuards(JwtAuthGuard)
     @Put(":id/column/:column_id/cards/:card_id/edit")
     updateCard(@Request() req,@Body(new ValidationPipe()) body: UpdateCardDto){
@@ -95,12 +108,16 @@ export class UsersController {
         return this.userService.getComment(req.user.userId,req.params.id,req.params.column_id,req.params.card_id,req.params.comment_id);
     }
 
+
+    @ApiBody({ type: [CreateCommentDto] })
     @UseGuards(JwtAuthGuard)
     @Post(":id/column/:column_id/cards/:card_id/comments")
     createComment(@Request() req,@Body(new ValidationPipe()) body: CreateCommentDto){
         return this.userService.createComment(req.user.userId,req.params.id,req.params.column_id,req.params.card_id,body)
     }
 
+
+    @ApiBody({ type: [UpdateCommentDto] })
     @UseGuards(JwtAuthGuard)
     @Put(":id/column/:column_id/cards/:card_id/comments/:comment_id/edit")
     updateComment(@Request() req,@Body(new ValidationPipe()) body: UpdateCommentDto){

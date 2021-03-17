@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/auth.guard");
 const create_card_dto_1 = require("../card/dto/create-card.dto");
 const update_card_dto_1 = require("../card/dto/update-card.dto");
@@ -102,6 +103,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserColumn", null);
 __decorate([
+    swagger_1.ApiBody({ type: [create_column_dto_1.CreateColumnDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Post(":id/column"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -110,6 +112,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createColumn", null);
 __decorate([
+    swagger_1.ApiBody({ type: [update_column_dto_1.UpdateColumnDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Put(":id/column/:column_id/edit"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -142,6 +145,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getCard", null);
 __decorate([
+    swagger_1.ApiBody({ type: [create_card_dto_1.CreateCardDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Post(":id/column/:column_id/cards"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -150,6 +154,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createCard", null);
 __decorate([
+    swagger_1.ApiBody({ type: [update_card_dto_1.UpdateCardDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Put(":id/column/:column_id/cards/:card_id/edit"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -182,6 +187,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getComment", null);
 __decorate([
+    swagger_1.ApiBody({ type: [create_comment_dto_1.CreateCommentDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Post(":id/column/:column_id/cards/:card_id/comments"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -190,6 +196,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createComment", null);
 __decorate([
+    swagger_1.ApiBody({ type: [update_comment_dto_1.UpdateCommentDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Put(":id/column/:column_id/cards/:card_id/comments/:comment_id/edit"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
@@ -206,6 +213,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "removeComment", null);
 UsersController = __decorate([
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiTags('user'),
     common_1.Controller('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);

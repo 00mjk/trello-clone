@@ -14,10 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const auth_service_1 = require("./auth.service");
 const sign_in_dto_1 = require("./dto/sign-in.dto");
 const sign_up_dto_1 = require("./dto/sign-up.dto");
 const passport_1 = require("@nestjs/passport");
+const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -30,21 +32,27 @@ let AuthController = class AuthController {
     }
 };
 __decorate([
+    swagger_1.ApiBody({ type: [sign_in_dto_1.SignInDto] }),
+    swagger_1.ApiOperation({ summary: 'Sign in with user credentials' }),
     common_1.UseGuards(passport_1.AuthGuard('local')),
     common_1.Post('sign-in'),
-    __param(0, common_1.Body()),
+    __param(0, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [sign_in_dto_1.SignInDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signIn", null);
 __decorate([
+    swagger_1.ApiOperation({ summary: 'Sign up with user credentials' }),
+    swagger_1.ApiBody({ type: [sign_up_dto_1.SignUpDto] }),
     common_1.Post('sign-up'),
-    __param(0, common_1.Body()),
+    __param(0, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [sign_up_dto_1.SignUpDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signUp", null);
 AuthController = __decorate([
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiTags('auth'),
     common_1.Controller('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

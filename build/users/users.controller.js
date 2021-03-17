@@ -36,7 +36,7 @@ __decorate([
 UsersController = __decorate([
     swagger_1.ApiBearerAuth(),
     swagger_1.ApiTags('user'),
-    common_1.Controller('users'),
+    common_1.Controller('/'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;

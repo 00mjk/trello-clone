@@ -19,11 +19,36 @@ const card_module_1 = require("./card/card.module");
 const comment_module_1 = require("./comment/comment.module");
 const column_entity_1 = require("./column/entity/column.entity");
 const comment_entity_1 = require("./comment/entity/comment.entity");
+const nest_router_1 = require("nest-router");
+const routes = [
+    {
+        path: '/user',
+        module: users_module_1.UsersModule,
+        children: [
+            {
+                path: '/column',
+                module: column_module_1.ColumnModule,
+                children: [{
+                        path: '/cards',
+                        module: card_module_1.CardModule,
+                        children: [
+                            {
+                                path: "/comments",
+                                module: comment_module_1.CommentModule,
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+    },
+];
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
         imports: [
+            nest_router_1.RouterModule.forRoutes(routes),
             typeorm_1.TypeOrmModule.forRoot({
                 ...config_1.connectionOptions, autoLoadEntities: true,
                 entities: [

@@ -42,7 +42,7 @@ let ColumnController = class ColumnController {
 };
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Get(":id/column"),
+    common_1.Get("/column"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -50,7 +50,7 @@ __decorate([
 ], ColumnController.prototype, "getUserAllColumns", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Get(":id/column/:column_id"),
+    common_1.Get("/column/:column_id"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -59,7 +59,7 @@ __decorate([
 __decorate([
     swagger_1.ApiBody({ type: [create_column_dto_1.CreateColumnDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Post(":id/column"),
+    common_1.Post("/column"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
@@ -68,7 +68,7 @@ __decorate([
 __decorate([
     swagger_1.ApiBody({ type: [update_column_dto_1.UpdateColumnDto] }),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Put(":id/column/:column_id/edit"),
+    common_1.Put("/column/:column_id/edit"),
     __param(0, common_1.Request()), __param(1, common_1.Body(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, update_column_dto_1.UpdateColumnDto]),
@@ -76,14 +76,14 @@ __decorate([
 ], ColumnController.prototype, "updateColumn", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Delete(":id/column/:column_id/remove"),
+    common_1.Delete("/column/:column_id/remove"),
     __param(0, common_1.Request()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ColumnController.prototype, "removeColumn", null);
 ColumnController = __decorate([
-    common_1.Controller('column'),
+    common_1.Controller('/'),
     __metadata("design:paramtypes", [column_service_1.ColumnService])
 ], ColumnController);
 exports.ColumnController = ColumnController;

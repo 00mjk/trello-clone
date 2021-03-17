@@ -37,6 +37,7 @@
       "dotenv": "^8.2.0",
       "fastify-swagger": "^4.4.2",
       "mysql": "^2.14.1",
+      "nest-router": "^1.0.9",
       "passport": "^0.4.1",
       "passport-jwt": "^4.0.0",
       "passport-local": "^1.0.0",

@@ -10,9 +10,34 @@ import { CardModule } from './card/card.module';
 import { CommentModule } from './comment/comment.module';
 import { ColumnTrello } from './column/entity/column.entity';
 import { CommentTrello } from './comment/entity/comment.entity';
+import { Routes ,RouterModule} from 'nest-router'
+const routes: Routes = [
+  {
+    path: '/user',
+    module: UsersModule,
+    children: [
+      {
+        path: '/column',
+        module: ColumnModule,
+        children: [{
+            path: '/cards',
+            module: CardModule,
+            children: [
+              {
+                path:"/comments",
+                module: CommentModule,
+              }
+            ]
+          }
+        ]
+      }
+    ],
+  },
+];
 
 @Module({
   imports: [
+    RouterModule.forRoutes(routes),
     TypeOrmModule.forRoot({
       ...connectionOptions, autoLoadEntities: true,
       entities: [

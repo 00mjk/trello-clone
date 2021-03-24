@@ -24,5 +24,15 @@ __decorate([
     class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
 ], CreateCommentDto.prototype, "description", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    class_validator_1.IsNotEmpty(),
+    __metadata("design:type", String)
+], CreateCommentDto.prototype, "cardId", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    class_validator_1.IsNotEmpty(),
+    __metadata("design:type", String)
+], CreateCommentDto.prototype, "columnId", void 0);
 exports.CreateCommentDto = CreateCommentDto;
 //# sourceMappingURL=create-comment.dto.js.map

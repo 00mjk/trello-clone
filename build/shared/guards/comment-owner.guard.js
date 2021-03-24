@@ -12,28 +12,38 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardOwnerGuard = void 0;
+exports.CommentOwnerGuard = void 0;
 const common_1 = require("@nestjs/common");
-let CardOwnerGuard = class CardOwnerGuard {
-    constructor(columnService) {
+const card_service_1 = require("../../card/card.service");
+const column_service_1 = require("../../column/column.service");
+let CommentOwnerGuard = class CommentOwnerGuard {
+    constructor(columnService, cardService) {
         this.columnService = columnService;
+        this.cardService = cardService;
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
+        const { columnId, cardId } = request.body;
         const { userId } = request.user;
-        const { columnId } = request.body;
         const column = await this.columnService.findOne(userId, columnId);
         if (!column) {
             return false;
         }
+        const card = await this.cardService.findOne(columnId, cardId);
+        if (!card) {
+            return false;
+        }
         request.column = column;
+        request.card = card;
         return true;
     }
 };
-CardOwnerGuard = __decorate([
+CommentOwnerGuard = __decorate([
     common_1.Injectable(),
     __param(0, common_1.Inject('ColumnService')),
-    __metadata("design:paramtypes", [Object])
-], CardOwnerGuard);
-exports.CardOwnerGuard = CardOwnerGuard;
-//# sourceMappingURL=card-owner.guard.js.map
+    __param(1, common_1.Inject('CardService')),
+    __metadata("design:paramtypes", [column_service_1.ColumnService,
+        card_service_1.CardService])
+], CommentOwnerGuard);
+exports.CommentOwnerGuard = CommentOwnerGuard;
+//# sourceMappingURL=comment-owner.guard.js.map

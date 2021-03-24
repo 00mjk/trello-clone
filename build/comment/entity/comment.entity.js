@@ -16,7 +16,7 @@ let CommentTrello = class CommentTrello {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn('uuid'),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CommentTrello.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),

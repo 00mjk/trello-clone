@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { use } from 'passport';
 import { Repository } from 'typeorm';
-import { User } from '../users/entity/users.entity';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { ColumnTrello } from './entity/column.entity';
 

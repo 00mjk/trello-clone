@@ -8,4 +8,12 @@ export class CreateCommentDto {
     @ApiProperty()
     @IsNotEmpty()
     description: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    cardId: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    columnId: string
 }

@@ -9,11 +9,14 @@ export class CardOwnerGuard implements CanActivate {
     ) {
         const request = context.switchToHttp().getRequest();
         
-        const column = await this.columnService.findOne(request.user.userId, request.body.columnId)
-        if (column) {
-            request.column = column
-            return true
+        const {userId} = request.user
+        const {columnId} = request.body
+        const column = await this.columnService.findOne(userId,columnId)
+        if (!column) {
+            return false;
         }
-        return false;
+        request.column = column
+        return true
+        
     }
 }

@@ -28,7 +28,9 @@ __decorate([
     __metadata("design:type", users_entity_1.User)
 ], ColumnTrello.prototype, "user", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => card_entity_1.CardTrello, card => card.column),
+    typeorm_1.OneToMany(() => card_entity_1.CardTrello, card => card.column, {
+        cascade: true,
+    }),
     __metadata("design:type", Array)
 ], ColumnTrello.prototype, "cards", void 0);
 ColumnTrello = __decorate([

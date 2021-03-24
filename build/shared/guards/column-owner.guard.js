@@ -12,6 +12,7 @@ let ColumnOwnerGuard = class ColumnOwnerGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
         if (request.user && request.body) {
+            console.log(request.user);
             return request.user.userId === request.body.userId;
         }
         return false;

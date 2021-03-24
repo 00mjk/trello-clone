@@ -32,7 +32,9 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "pass", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.user),
+    typeorm_1.OneToMany(() => column_entity_1.ColumnTrello, ColumnTrello => ColumnTrello.user, {
+        cascade: true
+    }),
     __metadata("design:type", Array)
 ], User.prototype, "columns", void 0);
 User = __decorate([

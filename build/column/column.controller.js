@@ -16,7 +16,6 @@ exports.ColumnController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../auth/auth.guard");
 const user_decorator_1 = require("../shared/decorators/user.decorator");
-const column_owner_guard_1 = require("../shared/guards/column-owner.guard");
 const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 const column_service_1 = require("./column.service");
 const create_column_dto_1 = require("./dto/create-column.dto");
@@ -25,14 +24,19 @@ let ColumnController = class ColumnController {
         this.columnService = columnService;
     }
     getColumn(id, user) {
-        console.log(user);
+        return this.columnService.findOne(user.userId, id);
     }
     getColumns(user) {
-        console.log(user);
         return this.columnService.findAll(user.userId);
     }
     createColumn(user, body) {
         return this.columnService.save(user.userId, body);
+    }
+    removeColumn(user, id) {
+        return this.columnService.remove(user.userId, id);
+    }
+    updateColumn(user, id, body) {
+        return this.columnService.update(user.userId, id, body);
     }
 };
 __decorate([
@@ -56,8 +60,22 @@ __decorate([
     __metadata("design:paramtypes", [Object, create_column_dto_1.CreateColumnDto]),
     __metadata("design:returntype", void 0)
 ], ColumnController.prototype, "createColumn", null);
+__decorate([
+    common_1.Delete(':id'),
+    __param(0, user_decorator_1.User()), __param(1, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], ColumnController.prototype, "removeColumn", null);
+__decorate([
+    common_1.Put(':id'),
+    __param(0, user_decorator_1.User()), __param(1, common_1.Param('id')), __param(2, common_1.Body(new validation_pipe_1.ValidationPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, create_column_dto_1.CreateColumnDto]),
+    __metadata("design:returntype", void 0)
+], ColumnController.prototype, "updateColumn", null);
 ColumnController = __decorate([
-    common_1.UseGuards(auth_guard_1.JwtAuthGuard, column_owner_guard_1.ColumnOwnerGuard),
+    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
     common_1.Controller('column'),
     __metadata("design:paramtypes", [column_service_1.ColumnService])
 ], ColumnController);

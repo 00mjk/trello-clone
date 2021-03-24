@@ -1,1 +1,1 @@
-{"version":3,"file":"update-column.dto.js","sourceRoot":"","sources":["../../../src/column/dto/update-column.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAC3C,6CAA8C;AAC9C,MAAa,eAAe;CAQ3B;AALG;IAFC,qBAAW,EAAE;IACb,4BAAU,EAAE;;6CACD;AAIZ;IAFC,qBAAW,EAAE;IACb,4BAAU,EAAE;;2CACH;AAPd,0CAQC"}
+{"version":3,"file":"update-column.dto.js","sourceRoot":"","sources":["../../../src/column/dto/update-column.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAC3C,6CAA8C;AAC9C,MAAa,eAAe;CAI3B;AADG;IAFC,qBAAW,EAAE;IACb,4BAAU,EAAE;;6CACD;AAHhB,0CAIC"}

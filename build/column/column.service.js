@@ -39,6 +39,20 @@ let ColumnService = class ColumnService {
             name: createColumnDto.name
         });
     }
+    async remove(userId, columnId) {
+        await this.columnRepository.delete({
+            user: { id: userId },
+            id: columnId
+        });
+    }
+    async update(userId, columnId, updateColumnDto) {
+        let column = await this.findOne(userId, columnId);
+        column.name = updateColumnDto.name;
+        await this.columnRepository.save({
+            user: { id: userId },
+            name: updateColumnDto.name
+        });
+    }
 };
 ColumnService = __decorate([
     common_1.Injectable(),

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { use } from 'passport';
 import { Repository } from 'typeorm';
 import { User } from '../users/entity/users.entity';
 import { CreateColumnDto } from './dto/create-column.dto';
-import { UpdateColumnDto } from './dto/update-column.dto';
 import { ColumnTrello } from './entity/column.entity';
 
 @Injectable()
@@ -30,6 +30,23 @@ export class ColumnService {
         await this.columnRepository.save({
           user:{id: userId},
           name: createColumnDto.name
+        })
+      }
+
+      async remove(userId: string,columnId: string): Promise<void> {
+        await this.columnRepository.delete({
+          user: {id: userId},
+          id: columnId
+        })
+      }
+
+      async update(userId: string,columnId: string, updateColumnDto: CreateColumnDto): Promise<void> {
+        let column = await this.findOne(userId,columnId)
+        column.name = updateColumnDto.name
+
+        await this.columnRepository.save({
+          user:{id: userId},
+          name: updateColumnDto.name
         })
       }
 }

@@ -19,7 +19,9 @@ export class User {
   @Column()
   pass: string;
 
-  @OneToMany(() => ColumnTrello, ColumnTrello => ColumnTrello.user)
+  @OneToMany(() => ColumnTrello, ColumnTrello => ColumnTrello.user,{
+    cascade:true
+  })
     columns: ColumnTrello[];
 
 }

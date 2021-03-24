@@ -19,10 +19,5 @@ __decorate([
     class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
 ], UpdateColumnDto.prototype, "name", void 0);
-__decorate([
-    swagger_1.ApiProperty(),
-    class_validator_1.IsNotEmpty(),
-    __metadata("design:type", String)
-], UpdateColumnDto.prototype, "id", void 0);
 exports.UpdateColumnDto = UpdateColumnDto;
 //# sourceMappingURL=update-column.dto.js.map

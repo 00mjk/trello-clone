@@ -11,9 +11,7 @@ const common_1 = require("@nestjs/common");
 let AccessGuard = class AccessGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        console.log(request.headers.authorization.split(" ")[1]);
-        console.log(request.params);
-        return true;
+        return request.params.id === request.user.userId;
     }
 };
 AccessGuard = __decorate([

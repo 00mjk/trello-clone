@@ -8,9 +8,6 @@ export class AccessGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log(request.headers.authorization.split(" ")[1])
-
-    console.log(request.params)
-    return true;
+    return request.params.id === request.user.userId;
   }
 }

@@ -17,7 +17,7 @@ let CardTrello = class CardTrello {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn('uuid'),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CardTrello.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),

@@ -26,6 +26,31 @@ let CardService = class CardService {
             where: { column: { id: columnId } }
         });
     }
+    async findOne(columnId, cardId) {
+        return await this.cardRepository.findOne({
+            where: {
+                column: { id: columnId },
+                id: cardId
+            }
+        });
+    }
+    async save(columnId, createCardDto) {
+        await this.cardRepository.save({
+            column: { id: columnId },
+            name: createCardDto.name
+        });
+    }
+    async update(columnId, cardId, createCardDto) {
+        let card = await this.findOne(columnId, cardId);
+        card.name = createCardDto.name;
+        await this.cardRepository.save(card);
+    }
+    async remove(columnId, cardId) {
+        await this.cardRepository.delete({
+            column: { id: columnId },
+            id: cardId
+        });
+    }
 };
 CardService = __decorate([
     common_1.Injectable(),

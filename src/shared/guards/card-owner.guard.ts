@@ -10,7 +10,6 @@ export class CardOwnerGuard implements CanActivate {
         const request = context.switchToHttp().getRequest();
         
         const column = await this.columnService.findOne(request.user.userId, request.body.columnId)
-        console.log(column)
         if (column) {
             request.column = column
             return true

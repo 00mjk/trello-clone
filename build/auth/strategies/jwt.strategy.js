@@ -19,7 +19,7 @@ let JwtStrategy = class JwtStrategy extends passport_1.PassportStrategy(passport
     constructor(configService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: constants_1.CRYPTO_SOIL.toString(),
+            secretOrKey: constants_1.JWT_SECRET,
             ignoreExpiration: false,
         });
     }

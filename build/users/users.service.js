@@ -27,6 +27,9 @@ let UsersService = class UsersService {
     async save(email, pass, username) {
         await this.userRepository.save({ email, pass, username });
     }
+    async findById(id) {
+        return await this.userRepository.findOne({ id });
+    }
 };
 UsersService = __decorate([
     common_1.Injectable(),

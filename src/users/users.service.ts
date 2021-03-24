@@ -17,4 +17,8 @@ export class UsersService {
       async save(email: string,pass: string,username: string): Promise<void> {
         await this.userRepository.save({email,pass,username})
       }
+
+      async findById(id: string): Promise<User|null> {
+        return await this.userRepository.findOne({id})
+      }
 }

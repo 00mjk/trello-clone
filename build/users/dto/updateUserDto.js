@@ -9,19 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColumnController = void 0;
-const common_1 = require("@nestjs/common");
-const auth_guard_1 = require("../auth/auth.guard");
-const column_service_1 = require("./column.service");
-let ColumnController = class ColumnController {
-    constructor(columnService) {
-        this.columnService = columnService;
-    }
-};
-ColumnController = __decorate([
-    common_1.UseGuards(auth_guard_1.JwtAuthGuard),
-    common_1.Controller('column'),
-    __metadata("design:paramtypes", [column_service_1.ColumnService])
-], ColumnController);
-exports.ColumnController = ColumnController;
-//# sourceMappingURL=column.controller.js.map
+exports.UpdateUserDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
+class UpdateUserDto {
+}
+__decorate([
+    swagger_1.ApiProperty(),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "email", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "pass", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "confirmPassword", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    __metadata("design:type", String)
+], UpdateUserDto.prototype, "username", void 0);
+exports.UpdateUserDto = UpdateUserDto;
+//# sourceMappingURL=updateUserDto.js.map

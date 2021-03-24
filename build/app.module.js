@@ -13,44 +13,37 @@ const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
 const users_entity_1 = require("./users/entity/users.entity");
 const card_entity_1 = require("./card/entity/card.entity");
-const config_1 = require("./config/config");
 const column_module_1 = require("./column/column.module");
 const card_module_1 = require("./card/card.module");
 const comment_module_1 = require("./comment/comment.module");
 const column_entity_1 = require("./column/entity/column.entity");
 const comment_entity_1 = require("./comment/entity/comment.entity");
-const nest_router_1 = require("nest-router");
-const routes = [
-    {
-        path: '/user',
-        module: users_module_1.UsersModule,
-        children: [
-            {
-                path: '/:userId/column',
-                module: column_module_1.ColumnModule,
-                children: [{
-                        path: '/:columnId/cards',
-                        module: card_module_1.CardModule,
-                        children: [
-                            {
-                                path: "/:cardId/comments",
-                                module: comment_module_1.CommentModule,
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-    },
-];
+const constants_1 = require("./constants");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
         imports: [
-            nest_router_1.RouterModule.forRoutes(routes),
             typeorm_1.TypeOrmModule.forRoot({
-                ...config_1.connectionOptions, autoLoadEntities: true,
+                type: 'postgres',
+                host: constants_1.DB_HOST,
+                username: constants_1.DB_USER,
+                password: constants_1.DB_PASS,
+                database: constants_1.DB_NAME,
+                autoLoadEntities: true,
+                synchronize: true,
+                migrationsRun: true,
+                logging: ['warn', 'error'],
+                subscribers: [
+                    path_1.join(__dirname, "subscribers/**/*.ts")
+                ],
+                migrations: [
+                    path_1.join(__dirname, 'migrations/*{.ts,.js}')
+                ],
+                cli: {
+                    migrationsDir: 'src/migrations'
+                },
                 entities: [
                     users_entity_1.User,
                     column_entity_1.ColumnTrello,

@@ -1,20 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { User } from '../users/entity/users.entity';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/sign-up.dto';
-import { encryptOptions } from '../config/config';
 import { SignInDto } from './dto/sign-in.dto';
+import { CRYPTO_SOIL } from '../constants';
 
 @Injectable()
 export class AuthService {
 
     constructor(private usersService: UsersService, private jwtService: JwtService,) { }
 
-    async validateUser(email: string, pass: string): Promise<any> {
+   async validateUser(email: string, pass: string): Promise<any> {
         const user = await this.usersService.findOne(email)
-        if (user && this.validatePassword(pass, user.pass)) {
+        if (user &&  this.validatePassword(pass, user.pass)) {
             return user;
         }
         return null;
@@ -25,18 +24,20 @@ export class AuthService {
     }
 
     async signIn(signInDto: SignInDto) {
-        const isValidate = await this.validateUser(signInDto.email, signInDto.password)
-
-        const payload = { username: isValidate.username, sub: isValidate.id };
+        const user = await this.validateUser(signInDto.email, signInDto.password)
+        if(!user){
+            throw new BadRequestException('passwords do not match');
+        }
+        const payload = { username: user.username, sub: user.id };
         const token = this.jwtService.sign(payload);
-        return { user_info: { ...isValidate }, access_token: token };
+        return { user_info: { ...user }, access_token: token };
     }
 
     async signUp(signUpDto: SignUpDto) {
-        const isValidate = await this.validateUser(signUpDto.email, signUpDto.password)
-        if (!isValidate){
+        const user = await this.usersService.findOne(signUpDto.email)
+        if (!user){
             if (signUpDto.password === signUpDto.passwordConfirmation) {
-                const hashPass = await bcrypt.hash(signUpDto.password, encryptOptions.soil)
+                const hashPass = await bcrypt.hash(signUpDto.password, CRYPTO_SOIL)
                 console.log(hashPass)
                 const payload = { username: signUpDto.username, sub: signUpDto.email };
 

@@ -16,44 +16,22 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const get_profile_dto_1 = require("./dto/get-profile.dto");
 const users_entity_1 = require("./entity/users.entity");
-const comment_entity_1 = require("../comment/entity/comment.entity");
 let UsersService = class UsersService {
-    constructor(usersRepository, commentRepository) {
-        this.usersRepository = usersRepository;
-        this.commentRepository = commentRepository;
+    constructor(userRepository) {
+        this.userRepository = userRepository;
     }
-    findAll() {
-        return this.usersRepository.find();
-    }
-    findOne(email) {
-        return this.usersRepository.findOne({ email });
-    }
-    async remove(id) {
-        await this.usersRepository.delete(id);
+    async findOne(email) {
+        return await this.userRepository.findOne({ email });
     }
     async save(email, pass, username) {
-        await this.usersRepository.save({ email, pass, username });
-    }
-    async validateUser(userId, paramId) {
-        if (userId !== paramId) {
-            throw new common_1.UnauthorizedException("Unathorized");
-        }
-        const user = await this.usersRepository.findOne({ id: userId });
-        return user;
-    }
-    async getUserInfo(userId, paramId) {
-        const user = await this.validateUser(userId, paramId);
-        return new get_profile_dto_1.GetProfileDto(user.username, user.email, user.id);
+        await this.userRepository.save({ email, pass, username });
     }
 };
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(users_entity_1.User)),
-    __param(1, typeorm_1.InjectRepository(comment_entity_1.CommentTrello)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

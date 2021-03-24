@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
-const config_1 = require("../config/config");
+const constants_1 = require("../constants");
 let AuthService = class AuthService {
     constructor(usersService, jwtService) {
         this.usersService = usersService;
@@ -31,16 +31,19 @@ let AuthService = class AuthService {
         return bcrypt.compareSync(password, hash);
     }
     async signIn(signInDto) {
-        const isValidate = await this.validateUser(signInDto.email, signInDto.password);
-        const payload = { username: isValidate.username, sub: isValidate.id };
+        const user = await this.validateUser(signInDto.email, signInDto.password);
+        if (!user) {
+            throw new common_1.BadRequestException('passwords do not match');
+        }
+        const payload = { username: user.username, sub: user.id };
         const token = this.jwtService.sign(payload);
-        return { user_info: { ...isValidate }, access_token: token };
+        return { user_info: { ...user }, access_token: token };
     }
     async signUp(signUpDto) {
-        const isValidate = await this.validateUser(signUpDto.email, signUpDto.password);
-        if (!isValidate) {
+        const user = await this.usersService.findOne(signUpDto.email);
+        if (!user) {
             if (signUpDto.password === signUpDto.passwordConfirmation) {
-                const hashPass = await bcrypt.hash(signUpDto.password, config_1.encryptOptions.soil);
+                const hashPass = await bcrypt.hash(signUpDto.password, constants_1.CRYPTO_SOIL);
                 console.log(hashPass);
                 const payload = { username: signUpDto.username, sub: signUpDto.email };
                 await this.usersService.save(signUpDto.email, hashPass, signUpDto.username);

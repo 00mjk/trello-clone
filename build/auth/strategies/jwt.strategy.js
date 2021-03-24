@@ -14,12 +14,12 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
-const config_2 = require("../../config/config");
+const constants_1 = require("../../constants");
 let JwtStrategy = class JwtStrategy extends passport_1.PassportStrategy(passport_jwt_1.Strategy) {
     constructor(configService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: config_2.jwtSecret.toString(),
+            secretOrKey: constants_1.CRYPTO_SOIL.toString(),
             ignoreExpiration: false,
         });
     }

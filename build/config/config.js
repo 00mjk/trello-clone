@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jwtSecret = exports.encryptOptions = exports.connectionOptions = void 0;
-const path_1 = require("path");
 require('dotenv').config();
 const PROD_ENV = 'production';
 const config = {
@@ -17,18 +16,6 @@ exports.connectionOptions = {
     username: config.user || 'postgres',
     password: config.password || 'postgres',
     database: config.database || 'postgres',
-    synchronize: true,
-    migrationsRun: true,
-    logging: ['warn', 'error'],
-    subscribers: [
-        path_1.join(__dirname, "subscribers/**/*.ts")
-    ],
-    migrations: [
-        path_1.join(__dirname, 'migrations/*{.ts,.js}')
-    ],
-    cli: {
-        migrationsDir: 'src/migrations'
-    },
 };
 exports.encryptOptions = {
     soil: +(process.env.CRYPTO_SOIL) || 10

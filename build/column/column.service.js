@@ -21,31 +21,6 @@ let ColumnService = class ColumnService {
     constructor(columnRepository) {
         this.columnRepository = columnRepository;
     }
-    async createColumn(user, createColumnDto) {
-        await this.columnRepository.save({ user: user, name: createColumnDto.name });
-    }
-    async getColumns(userId, paramId) {
-        const columns = await this.columnRepository.find({
-            relations: ['user'],
-            where: { user: { id: userId } },
-        });
-        return columns;
-    }
-    async getOneColumn(userId, paramId, columnId) {
-        const column = await this.columnRepository.findOne({
-            where: { user: { id: userId }, id: columnId, }
-        });
-        return column;
-    }
-    async updateColumn(userId, paramId, updateColumnDto) {
-        let column = await this.getOneColumn(userId, paramId, updateColumnDto.id);
-        column.name = updateColumnDto.name;
-        await this.columnRepository.save(column);
-    }
-    async removeColumn(userId, paramId, columnId) {
-        let column = await this.getOneColumn(userId, paramId, columnId);
-        await this.columnRepository.delete(column);
-    }
 };
 ColumnService = __decorate([
     common_1.Injectable(),

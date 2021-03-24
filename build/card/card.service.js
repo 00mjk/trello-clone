@@ -21,30 +21,6 @@ let CardService = class CardService {
     constructor(cardRepository) {
         this.cardRepository = cardRepository;
     }
-    async getCards(userId, paramId, columnId) {
-        return await this.cardRepository.find({
-            relations: ['column'],
-            where: { column: { id: column.id } },
-        });
-    }
-    async getOneCard(userId, paramId, columnId, cardId) {
-        const card = await this.cardRepository.findOne({
-            where: { column: { id: column.id }, id: cardId, }
-        });
-        return card;
-    }
-    async createCards(userId, paramId, columnId, createCardDto) {
-        await this.cardRepository.save({ column, name: createCardDto.name });
-    }
-    async updateCards(userId, paramId, columnId, updateCardDto) {
-        let card = await this.getOneCard(userId, paramId, column.id, updateCardDto.id);
-        card.name = updateCardDto.name;
-        await this.cardRepository.save(card);
-    }
-    async deleteCard(userId, paramId, columnId, cardId) {
-        let card = await this.getOneCard(userId, paramId, column.id, cardId);
-        await this.cardRepository.delete(card);
-    }
 };
 CardService = __decorate([
     common_1.Injectable(),

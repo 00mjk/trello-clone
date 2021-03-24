@@ -12,39 +12,5 @@ export class ColumnService {
         @InjectRepository(ColumnTrello)
         private columnRepository: Repository<ColumnTrello>){}
     
-  async createColumn(user:User,createColumnDto?: CreateColumnDto): Promise<void> {
-    await this.columnRepository.save({ user: user, name: createColumnDto.name })
-  }
-
-
-
-  async getColumns(userId?: string, paramId?: string): Promise<ColumnTrello[]> {
-    const columns = await this.columnRepository.find({
-      relations: ['user'],
-      where: { user: { id: userId } },
-    })
-    return columns
-  }
-
-  async getOneColumn(userId?: string, paramId?: string, columnId?: string): Promise<ColumnTrello> {
-    const column = await this.columnRepository.findOne({
-      
-      where: {user: {id: userId },id: columnId,}
-    })
-    return column
-  }
-
-  async updateColumn(userId?: string, paramId?: string, updateColumnDto?: UpdateColumnDto): Promise<void> {
-    let column = await this.getOneColumn(userId,paramId,updateColumnDto.id)
-    column.name = updateColumnDto.name
-
-    await this.columnRepository.save(column)
-  }
-
-  async removeColumn(userId?: string, paramId?: string, columnId?: string): Promise<void> {
-    let column = await this.getOneColumn(userId,paramId,columnId)
-    await this.columnRepository.delete(column)
-  }
-
 
 }

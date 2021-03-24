@@ -29,6 +29,8 @@ let UsersController = class UsersController {
     }
     updateUser(id, body) {
     }
+    deleteUser(id) {
+    }
 };
 __decorate([
     common_1.Get(":id"),
@@ -44,6 +46,13 @@ __decorate([
     __metadata("design:paramtypes", [String, updateUserDto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
+__decorate([
+    common_1.Delete(':id'),
+    __param(0, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "deleteUser", null);
 UsersController = __decorate([
     swagger_1.ApiBearerAuth(),
     swagger_1.ApiTags('user'),

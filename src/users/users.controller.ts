@@ -31,5 +31,9 @@ export class UsersController {
 
     }
 
+    @Delete(':id')
+    deleteUser(@Param('id') id: string){
+
+    }
 
 }

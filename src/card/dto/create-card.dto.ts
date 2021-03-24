@@ -5,4 +5,8 @@ export class CreateCardDto {
     @ApiProperty()
     @IsNotEmpty()
     name: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    columnId: string
 }

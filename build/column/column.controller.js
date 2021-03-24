@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ColumnController = void 0;
 const common_1 = require("@nestjs/common");
-const auth_guard_1 = require("../auth/auth.guard");
+const auth_guard_1 = require("../shared/guards/auth.guard");
 const user_decorator_1 = require("../shared/decorators/user.decorator");
 const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 const column_service_1 = require("./column.service");

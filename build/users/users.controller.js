@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const auth_guard_1 = require("../auth/auth.guard");
+const auth_guard_1 = require("../shared/guards/auth.guard");
 const access_guard_1 = require("../shared/guards/access.guard");
 const validation_pipe_1 = require("../shared/pipes/validation.pipe");
 const updateUserDto_1 = require("./dto/updateUserDto");

@@ -19,5 +19,10 @@ __decorate([
     class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
 ], CreateCardDto.prototype, "name", void 0);
+__decorate([
+    swagger_1.ApiProperty(),
+    class_validator_1.IsNotEmpty(),
+    __metadata("design:type", String)
+], CreateCardDto.prototype, "columnId", void 0);
 exports.CreateCardDto = CreateCardDto;
 //# sourceMappingURL=create-card.dto.js.map

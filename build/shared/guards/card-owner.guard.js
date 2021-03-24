@@ -12,25 +12,27 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardService = void 0;
+exports.CardOwnerGuard = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const card_entity_1 = require("./entity/card.entity");
-let CardService = class CardService {
-    constructor(cardRepository) {
-        this.cardRepository = cardRepository;
+let CardOwnerGuard = class CardOwnerGuard {
+    constructor(columnService) {
+        this.columnService = columnService;
     }
-    async findAll(columnId) {
-        return await this.cardRepository.find({
-            where: { column: { id: columnId } }
-        });
+    async canActivate(context) {
+        const request = context.switchToHttp().getRequest();
+        const column = await this.columnService.findOne(request.user.userId, request.body.columnId);
+        console.log(column);
+        if (column) {
+            request.column = column;
+            return true;
+        }
+        return false;
     }
 };
-CardService = __decorate([
+CardOwnerGuard = __decorate([
     common_1.Injectable(),
-    __param(0, typeorm_1.InjectRepository(card_entity_1.CardTrello)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
-], CardService);
-exports.CardService = CardService;
-//# sourceMappingURL=card.service.js.map
+    __param(0, common_1.Inject('ColumnService')),
+    __metadata("design:paramtypes", [Object])
+], CardOwnerGuard);
+exports.CardOwnerGuard = CardOwnerGuard;
+//# sourceMappingURL=card-owner.guard.js.map

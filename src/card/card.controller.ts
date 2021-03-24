@@ -1,16 +1,20 @@
 import { Controller, Delete, Get, UseGuards ,Request, Post, Body, Put} from '@nestjs/common';
-import {ApiBody,ApiBearerAuth,ApiTags} from '@nestjs/swagger'
-import { JwtAuthGuard } from '../auth/auth.guard';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CardTrello } from './entity/card.entity';
-import { UpdateCardDto } from './dto/update-card.dto';
-import { CreateCardDto } from './dto/create-card.dto';
-import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import { userInfo } from 'os';
+import { Column } from '../shared/decorators/column.decorator';
+import { User } from '../shared/decorators/user.decorator';
+import { JwtAuthGuard } from '../shared/guards/auth.guard';
+import { CardOwnerGuard } from '../shared/guards/card-owner.guard';
+import { CardService } from './card.service';
 
-@Controller('/')
+@UseGuards(JwtAuthGuard,CardOwnerGuard)
+@Controller('card')
 export class CardController {
 
-    constructor(){}
-
+    constructor(private readonly cardService: CardService){}
+   
+    @Get()
+    getCards(@User() user,@Column() column){
+        
+        this.cardService.findAll(column.id)
+    }
 }

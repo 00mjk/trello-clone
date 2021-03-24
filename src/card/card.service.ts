@@ -9,4 +9,10 @@ export class CardService {
         @InjectRepository(CardTrello)
         private cardRepository: Repository<CardTrello>){}
 
+
+    async findAll(columnId: string): Promise<CardTrello[]>{
+        return await this.cardRepository.find({
+            where: {column: {id: columnId}}
+        })
+    }
 }

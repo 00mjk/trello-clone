@@ -6,22 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardModule = void 0;
+exports.GuardsModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const column_module_1 = require("../column/column.module");
-const card_controller_1 = require("./card.controller");
-const card_service_1 = require("./card.service");
-const card_entity_1 = require("./entity/card.entity");
-let CardModule = class CardModule {
+const core_1 = require("@nestjs/core");
+const card_owner_guard_1 = require("./card-owner.guard");
+let GuardsModule = class GuardsModule {
 };
-CardModule = __decorate([
+GuardsModule = __decorate([
     common_1.Module({
-        controllers: [card_controller_1.CardController],
-        providers: [card_service_1.CardService],
-        imports: [typeorm_1.TypeOrmModule.forFeature([card_entity_1.CardTrello]), column_module_1.ColumnModule],
-        exports: [card_service_1.CardService]
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: card_owner_guard_1.CardOwnerGuard,
+            },
+        ],
     })
-], CardModule);
-exports.CardModule = CardModule;
-//# sourceMappingURL=card.module.js.map
+], GuardsModule);
+exports.GuardsModule = GuardsModule;
+//# sourceMappingURL=guards.module.js.map

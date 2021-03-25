@@ -25,6 +25,7 @@ export class ColumnService {
       }
 
       async save(userId: string,createColumnDto: CreateColumnDto):Promise<void>{
+        // REVU: Лучше писать { user: { id: userId }, ...CreateColumnDto }
         await this.columnRepository.save({
           user:{id: userId},
           name: createColumnDto.name
@@ -39,9 +40,11 @@ export class ColumnService {
       }
 
       async update(userId: string,columnId: string, updateColumnDto: CreateColumnDto): Promise<void> {
+        // REVU: Зачем это здесь? Кажется это можно убрать и ничего не изменится.
         let column = await this.findOne(userId,columnId)
         column.name = updateColumnDto.name
 
+        // REVU: можно написать просто .save({ id: columnId, ...updateColumnDto })
         await this.columnRepository.save({
           user:{id: userId},
           name: updateColumnDto.name

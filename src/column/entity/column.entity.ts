@@ -11,6 +11,9 @@ export class ColumnTrello {
     @Column()
     name: string;
 
+    // REVU: Еще добавь мануальную колонку userId.
+    // Не понадобится каждый раз доставать реляции для всяких проверок
+    // Добавляй ко всем реляциям Много-к-Одному, колонку содержащую id владельца
     @ManyToOne(() => User, user => user.columns)
     user: User;
 

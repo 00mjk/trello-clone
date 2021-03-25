@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs";
 
+// REVU: Странная проверка на владение колонкой. Правельнее будет сравнивать с сущностями из базы
 @Injectable()
 export class ColumnOwnerGuard implements CanActivate {
   canActivate(

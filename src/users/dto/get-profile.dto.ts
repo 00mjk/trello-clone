@@ -1,6 +1,6 @@
 import { ColumnTrello } from "../../column/entity/column.entity"
 
-
+// REVU: Можно создать один файл users.dto.ts, и перенести в него все декораторы
 export class GetProfileDto {
     username?: string
     email: string

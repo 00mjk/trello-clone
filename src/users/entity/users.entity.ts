@@ -16,6 +16,7 @@ export class User {
   @Column()
   username: string;
 
+  // REVU: Лучше переименнуй в password
   @Column()
   pass: string;
 

@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
   
 @ApiBearerAuth()
 @ApiTags('user')
+// REVU: не забывай ставить пробелы
 @UseGuards(JwtAuthGuard,AccessGuard)
 @Controller('user')
 export class UsersController {

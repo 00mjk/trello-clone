@@ -14,11 +14,13 @@ export class CardController {
     constructor(private readonly cardService: CardService){}
    
     @Get()
+    // REVU: Здесь и дальше лучше получать columnId из боди с использованием dto.
     getCards(@User() user,@Column() column){
         return this.cardService.findAll(column.id)
     }
 
     @Post()
+    // REVU: columnId уже входит в боди
     createCard(@Column() column,@Body(new ValidationPipe()) body:CreateCardDto){
         this.cardService.save(column.id,body)
     }

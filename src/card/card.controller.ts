@@ -1,4 +1,5 @@
 import { Controller, Delete, Get, UseGuards ,Request, Post, Body, Put, ValidationPipe, Param} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { userInfo } from 'os';
 import { Column } from '../shared/decorators/column.decorator';
 import { User } from '../shared/decorators/user.decorator';
@@ -7,6 +8,9 @@ import { CardOwnerGuard } from '../shared/guards/card-owner.guard';
 import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
 
+
+@ApiBearerAuth()
+@ApiTags('card')
 @UseGuards(JwtAuthGuard,CardOwnerGuard)
 @Controller('card')
 export class CardController {

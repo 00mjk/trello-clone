@@ -8,6 +8,9 @@ import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { ColumnService } from './column.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 
+
+@ApiBearerAuth()
+@ApiTags('column')
 @UseGuards(JwtAuthGuard)
 @Controller('column')
 export class ColumnController {

@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const column_decorator_1 = require("../shared/decorators/column.decorator");
 const user_decorator_1 = require("../shared/decorators/user.decorator");
 const auth_guard_1 = require("../shared/guards/auth.guard");
@@ -66,6 +67,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CardController.prototype, "removeCard", null);
 CardController = __decorate([
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiTags('card'),
     common_1.UseGuards(auth_guard_1.JwtAuthGuard, card_owner_guard_1.CardOwnerGuard),
     common_1.Controller('card'),
     __metadata("design:paramtypes", [card_service_1.CardService])

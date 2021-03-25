@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Card } from '../shared/decorators/card.decorator';
 import { Column } from '../shared/decorators/column.decorator';
 import { JwtAuthGuard } from '../shared/guards/auth.guard';
@@ -7,6 +8,9 @@ import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
+
+@ApiBearerAuth()
+@ApiTags('comment')
 @UseGuards(JwtAuthGuard,CommentOwnerGuard)
 @Controller('comment')
 export class CommentController {

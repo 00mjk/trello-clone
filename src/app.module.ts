@@ -25,27 +25,18 @@ import { join } from 'path';
       synchronize: true,
       migrationsRun: true,
       logging: ['warn', 'error'],
-      subscribers: [
-        join(__dirname, "subscribers/**/*.ts")
-      ],
-      migrations: [
-        join(__dirname, 'migrations/*{.ts,.js}')
-      ],
+      subscribers: [join(__dirname, 'subscribers/**/*.ts')],
+      migrations: [join(__dirname, 'migrations/*{.ts,.js}')],
       cli: {
-        migrationsDir: 'src/migrations'
+        migrationsDir: 'src/migrations',
       },
-      entities: [
-        User,
-        ColumnTrello,
-        CommentTrello,
-        CardTrello]
+      entities: [User, ColumnTrello, CommentTrello, CardTrello],
     }),
     AuthModule,
     UsersModule,
     ColumnModule,
     CardModule,
     CommentModule,
-  ]
+  ],
 })
-export class AppModule {
-}
+export class AppModule {}

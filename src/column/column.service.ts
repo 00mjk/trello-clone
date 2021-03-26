@@ -6,45 +6,53 @@ import { ColumnTrello } from './entity/column.entity';
 
 @Injectable()
 export class ColumnService {
-    constructor(
-        @InjectRepository(ColumnTrello)
-        private columnRepository: Repository<ColumnTrello>){}
-    
-      async findOne(userId: string,columnId: string) : Promise<ColumnTrello|null> {
-        return await this.columnRepository.findOne({
-          relations: ['user'],
-          where: { user: { id: userId}, id:columnId}
-        })
-      }
+  constructor(
+    @InjectRepository(ColumnTrello)
+    private columnRepository: Repository<ColumnTrello>,
+  ) {}
 
-      async findAll(userId: string): Promise<ColumnTrello[]> {
-        return await this.columnRepository.find({
-          relations: ['user'],
-          where: { user: { id: userId}}
-        })
-      }
+  async findOne(
+    userId: string,
+    columnId: string,
+  ): Promise<ColumnTrello | null> {
+    return await this.columnRepository.findOne({
+      relations: ['user'],
+      where: { user: { id: userId }, id: columnId },
+    });
+  }
 
-      async save(userId: string,createColumnDto: CreateColumnDto):Promise<void>{
-        await this.columnRepository.save({
-          user:{id: userId},
-          name: createColumnDto.name
-        })
-      }
+  async findAll(userId: string): Promise<ColumnTrello[]> {
+    return await this.columnRepository.find({
+      relations: ['user'],
+      where: { user: { id: userId } },
+    });
+  }
 
-      async remove(userId: string,columnId: string): Promise<void> {
-        await this.columnRepository.delete({
-          user: {id: userId},
-          id: columnId
-        })
-      }
+  async save(userId: string, createColumnDto: CreateColumnDto): Promise<void> {
+    await this.columnRepository.save({
+      user: { id: userId },
+      name: createColumnDto.name,
+    });
+  }
 
-      async update(userId: string,columnId: string, updateColumnDto: CreateColumnDto): Promise<void> {
-        let column = await this.findOne(userId,columnId)
-        column.name = updateColumnDto.name
+  async remove(userId: string, columnId: string): Promise<void> {
+    await this.columnRepository.delete({
+      user: { id: userId },
+      id: columnId,
+    });
+  }
 
-        await this.columnRepository.save({
-          user:{id: userId},
-          name: updateColumnDto.name
-        })
-      }
+  async update(
+    userId: string,
+    columnId: string,
+    updateColumnDto: CreateColumnDto,
+  ): Promise<void> {
+    let column = await this.findOne(userId, columnId);
+    column.name = updateColumnDto.name;
+
+    await this.columnRepository.save({
+      user: { id: userId },
+      name: updateColumnDto.name,
+    });
+  }
 }

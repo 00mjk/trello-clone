@@ -1,6 +1,6 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Observable } from "rxjs";
-import { JwtStrategy } from "../../auth/strategies";
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { JwtStrategy } from '../../auth/strategies';
 
 @Injectable()
 export class AccessGuard implements CanActivate {

@@ -57,7 +57,7 @@ export class CommentService {
   }
 
   async remove(cardId: string, commentId: string): Promise<CommentTrello> {
-    const card = await this.findOne(cardId,commentId)
+    const card = await this.findOne(cardId, commentId);
     await this.comentRepository.delete({
       card: { id: cardId },
       id: commentId,

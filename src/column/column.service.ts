@@ -28,7 +28,10 @@ export class ColumnService {
     });
   }
 
-  async save(userId: string, createColumnDto: CreateColumnDto): Promise<ColumnTrello> {
+  async save(
+    userId: string,
+    createColumnDto: CreateColumnDto,
+  ): Promise<ColumnTrello> {
     return await this.columnRepository.save({
       user: { id: userId },
       name: createColumnDto.name,
@@ -36,7 +39,7 @@ export class ColumnService {
   }
 
   async remove(userId: string, columnId: string): Promise<ColumnTrello> {
-    const column = await this.findOne(userId,columnId)
+    const column = await this.findOne(userId, columnId);
     await this.columnRepository.delete({
       user: { id: userId },
       id: columnId,

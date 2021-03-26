@@ -27,7 +27,10 @@ export class CardService {
     });
   }
 
-  async save(columnId: string, createCardDto: CreateCardDto): Promise<CardTrello> {
+  async save(
+    columnId: string,
+    createCardDto: CreateCardDto,
+  ): Promise<CardTrello> {
     return await this.cardRepository.save({
       column: { id: columnId },
       name: createCardDto.name,
@@ -42,11 +45,11 @@ export class CardService {
     let card = await this.findOne(columnId, cardId);
     card.name = createCardDto.name;
 
-   return await this.cardRepository.save(card);
+    return await this.cardRepository.save(card);
   }
 
   async remove(columnId: string, cardId: string): Promise<CardTrello> {
-    const card = await this.findOne(columnId,cardId)
+    const card = await this.findOne(columnId, cardId);
     await this.cardRepository.delete({
       column: { id: columnId },
       id: cardId,

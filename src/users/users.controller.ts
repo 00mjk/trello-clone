@@ -22,18 +22,19 @@ import { UsersService } from './users.service';
 @UseGuards(JwtAuthGuard, AccessGuard)
 @Controller('user')
 export class UsersController {
-    constructor(private readonly userService: UsersService) {}
-    
-    @Get(":id")
-    getUser(@Param('id') id: string){
-        return this.userService.findOne(id)
-    }
-    
-    @Put(":id")
-    updateUser(@Param('id') id: string,@Body(new ValidationPipe()) body: UpdateUserDto){
+  constructor(private readonly userService: UsersService) {}
 
-    }
+  @Get(':id')
+  getUser(@Param('id') id: string) {
+    return this.userService.findOne(id);
+  }
 
-    @Delete(':id')
-    deleteUser(@Param('id') id: string) {}    
+  @Put(':id')
+  updateUser(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) body: UpdateUserDto,
+  ) {}
+
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {}
 }

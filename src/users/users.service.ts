@@ -13,10 +13,10 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async findByEmail(email: string): Promise<User | null> {
-    return await this.userRepository.findOne({ email })
+    return await this.userRepository.findOne({ email });
   }
 
   async save(email: string, password: string, username: string): Promise<User> {
@@ -24,6 +24,6 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User | null> {
-    return await this.userRepository.findOne({ id })
+    return await this.userRepository.findOne({ id });
   }
 }

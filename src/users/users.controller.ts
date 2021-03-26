@@ -1,16 +1,25 @@
-import { Controller, Get, UseGuards, Request, Body, Post, Put, Delete, UsePipes, Param } from '@nestjs/common';
-import {ApiBody,ApiBearerAuth,ApiTags} from '@nestjs/swagger'
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Request,
+  Body,
+  Post,
+  Put,
+  Delete,
+  UsePipes,
+  Param,
+} from '@nestjs/common';
+import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { AccessGuard } from '../shared/guards/access.guard';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { UpdateUserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
-
-  
 @ApiBearerAuth()
 @ApiTags('user')
-@UseGuards(JwtAuthGuard,AccessGuard)
+@UseGuards(JwtAuthGuard, AccessGuard)
 @Controller('user')
 export class UsersController {
     constructor(private readonly userService: UsersService) {}
@@ -26,8 +35,5 @@ export class UsersController {
     }
 
     @Delete(':id')
-    deleteUser(@Param('id') id: string){
-
-    }
-
+    deleteUser(@Param('id') id: string) {}    
 }

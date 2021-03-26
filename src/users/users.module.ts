@@ -7,7 +7,7 @@ import { CardTrello } from '../card/entity/card.entity';
 import { CommentTrello } from '../comment/entity/comment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User,CardTrello,CommentTrello])],
+  imports: [TypeOrmModule.forFeature([User, CardTrello, CommentTrello])],
   providers: [UsersService],
   controllers: [UsersController],
   exports: [UsersService],

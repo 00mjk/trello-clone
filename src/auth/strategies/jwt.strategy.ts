@@ -7,16 +7,16 @@ import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-	constructor(configService: ConfigService,userService: UsersService) {
-		super({
-			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			secretOrKey: JWT_SECRET,
-			ignoreExpiration: false,
-		});
-	}
+  constructor(configService: ConfigService, userService: UsersService) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: JWT_SECRET,
+      ignoreExpiration: false,
+    });
+  }
 
-	async validate(payload: any) {
-		const user = { userId: payload.sub, username: payload.username }
-		return user;
-	  }
+  async validate(payload: any) {
+    const user = { userId: payload.sub, username: payload.username };
+    return user;
+  }
 }

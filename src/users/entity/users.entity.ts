@@ -1,16 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, PrimaryColumn, Index } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  PrimaryColumn,
+  Index,
+} from 'typeorm';
 import { ColumnTrello } from '../../column/entity/column.entity';
 
-
-
-@Entity({name:"user"})
+@Entity({ name: 'user' })
 export class User {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  @Index({unique: true})
+  @Index({ unique: true })
   email: string;
 
   @Column()
@@ -19,9 +23,8 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(() => ColumnTrello, ColumnTrello => ColumnTrello.user,{
-    cascade:true
+  @OneToMany(() => ColumnTrello, (ColumnTrello) => ColumnTrello.user, {
+    cascade: true,
   })
-    columns: ColumnTrello[];
-
+  columns: ColumnTrello[];
 }

@@ -8,7 +8,7 @@ import { CardTrello } from './entity/card.entity';
 @Module({
   controllers: [CardController],
   providers: [CardService],
-  imports: [TypeOrmModule.forFeature([CardTrello]),ColumnModule],
-  exports: [CardService]
+  imports: [TypeOrmModule.forFeature([CardTrello]), ColumnModule],
+  exports: [CardService],
 })
 export class CardModule {}

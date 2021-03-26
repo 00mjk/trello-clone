@@ -8,6 +8,6 @@ import { ColumnController } from './column.controller';
   imports: [TypeOrmModule.forFeature([ColumnTrello])],
   providers: [ColumnService],
   exports: [ColumnService],
-  controllers: [ColumnController]
+  controllers: [ColumnController],
 })
 export class ColumnModule {}

@@ -6,52 +6,62 @@ import { CommentTrello } from './entity/comment.entity';
 
 @Injectable()
 export class CommentService {
+  constructor(
+    @InjectRepository(CommentTrello)
+    private comentRepository: Repository<CommentTrello>,
+  ) {}
 
-    constructor(
-        @InjectRepository(CommentTrello)
-        private comentRepository: Repository<CommentTrello>
-    ) { }
+  async save(
+    cardId: string,
+    createCommentDto: CreateCommentDto,
+  ): Promise<CommentTrello> {
+    return await this.comentRepository.save({
+      card: { id: cardId },
+      name: createCommentDto.name,
+      description: createCommentDto.description,
+    });
+  }
 
-    async save(cardId: string, createCommentDto: CreateCommentDto): Promise<void> {
-        await this.comentRepository.save({
-            card: { id: cardId },
-            name: createCommentDto.name,
-            description: createCommentDto.description
-        })
-    }
+  async findAll(cardId: string): Promise<CommentTrello[]> {
+    return await this.comentRepository.find({
+      where: {
+        card: {
+          id: cardId,
+        },
+      },
+    });
+  }
 
-    async findAll(cardId: string): Promise<CommentTrello[]> {
-        return await this.comentRepository.find({
-            where:{
-                card:{
-                    id: cardId
-                }
-            }
-        })
-    }
+  async findOne(
+    cardId: string,
+    commentId: string,
+  ): Promise<CommentTrello | null> {
+    return await this.comentRepository.findOne({
+      where: {
+        card: { id: cardId },
+        id: commentId,
+      },
+    });
+  }
 
-    async findOne(cardId: string,commentId: string): Promise<CommentTrello|null> {
-        return await this.comentRepository.findOne({
-            where:{
-                card:{id: cardId},
-                id: commentId
-            }
-        })
-    }
+  async update(
+    cardId: string,
+    commentId: string,
+    createCommentDto: CreateCommentDto,
+  ): Promise<CommentTrello> {
+    let comment = await this.findOne(cardId, commentId);
+    comment.name = createCommentDto.name;
+    comment.description = createCommentDto.description;
 
-    async update(cardId: string,commentId: string,createCommentDto: CreateCommentDto):Promise<void> {
-        let comment = await this.findOne(cardId,commentId)
-        comment.name = createCommentDto.name
-        comment.description = createCommentDto.description
+    return await this.comentRepository.save(comment);
+  }
 
-        await this.comentRepository.save(comment)
-    }
-
-    async remove(cardId: string,commentId: string): Promise<void> {
-        await this.comentRepository.delete({
-            card: {id: cardId},
-            id: commentId    
-        })
-    }
-
+  async remove(cardId: string, commentId: string): Promise<CommentTrello> {
+    const card = await this.findOne(cardId,commentId)
+    await this.comentRepository.delete({
+      card: { id: cardId },
+      id: commentId,
+    });
+    return card;
+  }
 }

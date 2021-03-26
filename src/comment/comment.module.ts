@@ -9,7 +9,11 @@ import { ColumnModule } from '../column/column.module';
 @Module({
   providers: [CommentService],
   controllers: [CommentController],
-  imports: [TypeOrmModule.forFeature([CommentTrello]),CardModule,ColumnModule],
-  exports:[CommentService]
+  imports: [
+    TypeOrmModule.forFeature([CommentTrello]),
+    CardModule,
+    ColumnModule,
+  ],
+  exports: [CommentService],
 })
 export class CommentModule {}

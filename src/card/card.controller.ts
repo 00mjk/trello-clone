@@ -29,9 +29,7 @@ export class CardController {
   }
 
   @Post()
-  createCard(
-    @Body(new ValidationPipe()) body: CreateCardDto,
-  ) {
+  createCard(@Body(new ValidationPipe()) body: CreateCardDto) {
     return this.cardService.save(body);
   }
 
@@ -44,7 +42,10 @@ export class CardController {
   }
 
   @Delete(':id')
-  removeCard(@Body(new ValidationPipe()) body: FindColumnDto, @Param('id') id: string) {
+  removeCard(
+    @Body(new ValidationPipe()) body: FindColumnDto,
+    @Param('id') id: string,
+  ) {
     return this.cardService.remove(body.columndId, id);
   }
 }

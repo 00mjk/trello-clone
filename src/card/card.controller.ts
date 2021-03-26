@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { userInfo } from 'os';
 import { Column } from '../shared/decorators/column.decorator';
 import { User } from '../shared/decorators/user.decorator';
-import { JwtAuthGuard } from '../shared/guards/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { CardOwnerGuard } from '../shared/guards/card-owner.guard';
 import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
@@ -19,7 +19,7 @@ export class CardController {
    
     @Get()
     getCards(@User() user,@Column() column){
-        return this.cardService.findAll(column.id)
+        return this.cardService.findByColumnId(column.id)
     }
 
     @Post()

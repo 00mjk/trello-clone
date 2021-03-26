@@ -17,7 +17,7 @@ export class User {
   username: string;
 
   @Column()
-  pass: string;
+  password: string;
 
   @OneToMany(() => ColumnTrello, ColumnTrello => ColumnTrello.user,{
     cascade:true

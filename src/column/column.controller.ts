@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, UseGuards ,Request, Post, Body, Put, Param} from '@nestjs/common';
 import {ApiBody,ApiBearerAuth,ApiTags} from '@nestjs/swagger'
 import { userInfo } from 'os';
-import { JwtAuthGuard } from '../shared/guards/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { User } from '../shared/decorators/user.decorator';
 import { ColumnOwnerGuard } from '../shared/guards/column-owner.guard';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';

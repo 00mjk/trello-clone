@@ -11,7 +11,7 @@ export class CardService {
         private cardRepository: Repository<CardTrello>){}
 
 
-    async findAll(columnId: string): Promise<CardTrello[]>{
+    async findByColumnId(columnId: string): Promise<CardTrello[]>{
         return await this.cardRepository.find({
             where: {column: {id: columnId}}
         })

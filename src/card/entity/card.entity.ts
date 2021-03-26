@@ -14,6 +14,10 @@ export class CardTrello {
     @ManyToOne(() => ColumnTrello, columnTrello => columnTrello.cards)
     column: ColumnTrello;
 
+
+    @Column()
+    
+
     @OneToMany(()=> CommentTrello,comment => comment.card, {
         cascade: true,
     })

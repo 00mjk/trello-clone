@@ -11,13 +11,13 @@ export class SignUpDto {
     @ApiProperty()
 	@IsString()
 	@IsNotEmpty()
-    @MinLength(8)
+    @MinLength(5)
     password: string
 
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    @MinLength(8)
+    @MinLength(5)
     passwordConfirmation: string
 
     @ApiProperty()

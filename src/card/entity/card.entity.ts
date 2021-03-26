@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -15,6 +16,9 @@ export class CardTrello {
 
   @Column()
   name: string;
+
+  //@Column()
+  //columnId: string
 
   @ManyToOne(() => ColumnTrello, (columnTrello) => columnTrello.cards)
   column: ColumnTrello;

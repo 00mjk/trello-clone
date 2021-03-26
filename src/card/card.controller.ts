@@ -11,13 +11,10 @@ import {
   Param,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { userInfo } from 'os';
-import { Column } from '../shared/decorators/column.decorator';
-import { User } from '../shared/decorators/user.decorator';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { CardOwnerGuard } from '../shared/guards/card-owner.guard';
 import { CardService } from './card.service';
-import { CreateCardDto } from './dto/create-card.dto';
+import { CreateCardDto, FindColumnDto } from './dto/card.dto';
 
 @ApiBearerAuth()
 @ApiTags('card')
@@ -27,29 +24,27 @@ export class CardController {
   constructor(private readonly cardService: CardService) {}
 
   @Get()
-  getCards(@User() user, @Column() column) {
-    return this.cardService.findAll(column.id);
+  getCards(@Body(new ValidationPipe()) body: FindColumnDto) {
+    return this.cardService.findByColumnId(body.columndId);
   }
 
   @Post()
   createCard(
-    @Column() column,
     @Body(new ValidationPipe()) body: CreateCardDto,
   ) {
-    return this.cardService.save(column.id, body);
+    return this.cardService.save(body);
   }
 
   @Put(':id')
   updateCard(
-    @Column() column,
     @Param('id') id: string,
     @Body(new ValidationPipe()) body: CreateCardDto,
   ) {
-    this.cardService.update(column.id, id, body);
+    this.cardService.update(id, body);
   }
 
   @Delete(':id')
-  removeCard(@Column() column, @Param('id') id: string) {
-    return this.cardService.remove(column.id, id);
+  removeCard(@Body(new ValidationPipe()) body: FindColumnDto, @Param('id') id: string) {
+    return this.cardService.remove(body.columndId, id);
   }
 }

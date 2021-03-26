@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ColumnTrello } from '../column/entity/column.entity';
-import { CreateCardDto } from './dto/create-card.dto';
+import { CreateCardDto } from './dto/card.dto';
 import { CardTrello } from './entity/card.entity';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class CardService {
     private cardRepository: Repository<CardTrello>,
   ) {}
 
-  async findAll(columnId: string): Promise<CardTrello[]> {
+  async findByColumnId(columnId: string): Promise<CardTrello[]> {
     return await this.cardRepository.find({
       where: { column: { id: columnId } },
     });
@@ -28,21 +28,19 @@ export class CardService {
   }
 
   async save(
-    columnId: string,
     createCardDto: CreateCardDto,
   ): Promise<CardTrello> {
     return await this.cardRepository.save({
-      column: { id: columnId },
+      column: { id: createCardDto.columnId },
       name: createCardDto.name,
     });
   }
 
   async update(
-    columnId: string,
     cardId: string,
     createCardDto: CreateCardDto,
   ): Promise<CardTrello> {
-    let card = await this.findOne(columnId, cardId);
+    let card = await this.findOne(createCardDto.columnId, cardId);
     card.name = createCardDto.name;
 
     return await this.cardRepository.save(card);

@@ -42,13 +42,12 @@ export class AuthService {
     if (!user) {
       if (signUpDto.password === signUpDto.passwordConfirmation) {
         const hashPass = await bcrypt.hash(signUpDto.password, CRYPTO_SOIL);
-        const payload = { username: signUpDto.username, sub: signUpDto.email };
-
-        await this.usersService.save(
+        const savedUser = await this.usersService.save(
           signUpDto.email,
           hashPass,
           signUpDto.username,
         );
+        const payload = { username: signUpDto.username, sub: savedUser.id };
         return {
           access_token: this.jwtService.sign(payload),
         };

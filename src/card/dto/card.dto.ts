@@ -10,3 +10,9 @@ export class CreateCardDto {
   @IsNotEmpty()
   columnId: string;
 }
+
+export class FindColumnDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  columndId: string
+}

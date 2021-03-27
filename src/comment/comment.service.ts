@@ -11,9 +11,7 @@ export class CommentService {
     private comentRepository: Repository<CommentTrello>,
   ) {}
 
-  async save(
-    createCommentDto: CreateCommentDto,
-  ): Promise<CommentTrello> {
+  async save(createCommentDto: CreateCommentDto): Promise<CommentTrello> {
     return await this.comentRepository.save({
       card: { id: createCommentDto.cardId },
       name: createCommentDto.name,

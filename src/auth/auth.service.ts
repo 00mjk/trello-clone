@@ -12,9 +12,9 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
-  async validateUser(email: string, password: string): Promise<User|null> {
+  async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.findByEmail(email);
     if (user && this.validatePassword(password, user.password)) {
       return user;
@@ -54,7 +54,5 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
-
-
   }
 }

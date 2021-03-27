@@ -28,9 +28,7 @@ export class CommentController {
   }
 
   @Post()
-  createComment(
-    @Body(new ValidationPipe()) body: CreateCommentDto,
-  ) {
+  createComment(@Body(new ValidationPipe()) body: CreateCommentDto) {
     this.commentService.save(body);
   }
 
@@ -39,11 +37,14 @@ export class CommentController {
     @Body(new ValidationPipe()) body: CreateCommentDto,
     @Param('id') id: string,
   ) {
-    this.commentService.update(id,body);
+    this.commentService.update(id, body);
   }
 
   @Delete(':id')
-  removeComment(@Body(new ValidationPipe()) body: FindCardDto, @Param('id') id) {
+  removeComment(
+    @Body(new ValidationPipe()) body: FindCardDto,
+    @Param('id') id,
+  ) {
     this.commentService.remove(body.cardId, id);
   }
 }

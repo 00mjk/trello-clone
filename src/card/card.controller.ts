@@ -3,7 +3,6 @@ import {
   Delete,
   Get,
   UseGuards,
-  Request,
   Post,
   Body,
   Put,
@@ -25,7 +24,7 @@ export class CardController {
 
   @Get()
   getCards(@Body(new ValidationPipe()) body: FindColumnDto) {
-    return this.cardService.findByColumnId(body.columndId);
+    return this.cardService.findByColumnId(body.columnId);
   }
 
   @Post()
@@ -46,6 +45,6 @@ export class CardController {
     @Body(new ValidationPipe()) body: FindColumnDto,
     @Param('id') id: string,
   ) {
-    return this.cardService.remove(body.columndId, id);
+    return this.cardService.remove(body.columnId, id);
   }
 }

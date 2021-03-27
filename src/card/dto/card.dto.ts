@@ -14,5 +14,5 @@ export class CreateCardDto {
 export class FindColumnDto {
   @ApiProperty()
   @IsNotEmpty()
-  columndId: string;
+  columnId: string;
 }

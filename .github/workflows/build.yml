@@ -1,10 +1,10 @@
-name: Build Node.js 
+name: build_node.js 
 
 on:
   pull_request:
   push:
     branches:
-    - refactoring
+    - main
 
 jobs:
   build:
@@ -18,4 +18,4 @@ jobs:
       with:
         node-version: '15.x'
     - run: yarn
-    - run: yarn build --if-present
+    - run: yarn build

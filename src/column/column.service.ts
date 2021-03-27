@@ -34,6 +34,7 @@ export class ColumnService {
   ): Promise<ColumnTrello> {
     return await this.columnRepository.save({
       user: { id: userId },
+      userId,
       name: createColumnDto.name,
     });
   }

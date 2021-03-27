@@ -4,7 +4,6 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class CardOwnerGuard implements CanActivate {
@@ -18,7 +17,6 @@ export class CardOwnerGuard implements CanActivate {
     if (!column) {
       return false;
     }
-    request.column = column;
     return true;
   }
 }

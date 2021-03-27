@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
-import { CardOwnerGuard } from '../shared/guards/card-owner.guard';
+import { CardOwnerGuard } from './card-owner.guard';
 import { CardService } from './card.service';
 import { CreateCardDto, FindColumnDto } from './dto/card.dto';
 

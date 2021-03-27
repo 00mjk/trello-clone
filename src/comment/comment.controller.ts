@@ -9,13 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Card } from '../shared/decorators/card.decorator';
-import { Column } from '../shared/decorators/column.decorator';
 import { JwtAuthGuard } from '../auth/auth.guard';
-import { CommentOwnerGuard } from '../shared/guards/comment-owner.guard';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto, FindCardDto } from './dto/comment.dto';
+import { CommentOwnerGuard } from './comment-owner.guard';
 
 @ApiBearerAuth()
 @ApiTags('comment')
@@ -25,30 +23,27 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Get()
-  getComments(@Card() card) {
-    return this.commentService.findAll(card.id);
+  getComments(@Body(new ValidationPipe()) body: FindCardDto) {
+    return this.commentService.findAll(body.cardId);
   }
 
   @Post()
   createComment(
-    @Card() card,
     @Body(new ValidationPipe()) body: CreateCommentDto,
   ) {
-    // console.log(card)
-    this.commentService.save(card.id, body);
+    this.commentService.save(body);
   }
 
   @Put(':id')
   updateComment(
-    @Card() card,
     @Body(new ValidationPipe()) body: CreateCommentDto,
     @Param('id') id: string,
   ) {
-    this.commentService.update(card.id, id, body);
+    this.commentService.update(id,body);
   }
 
   @Delete(':id')
-  removeComment(@Card() card, @Param('id') id) {
-    this.commentService.remove(card.id, id);
+  removeComment(@Body(new ValidationPipe()) body: FindCardDto, @Param('id') id) {
+    this.commentService.remove(body.cardId, id);
   }
 }

@@ -16,6 +16,9 @@ export class ColumnTrello {
   @Column()
   name: string;
 
+  @Column()
+  userId: string;
+
   @ManyToOne(() => User, (user) => user.columns)
   user: User;
 

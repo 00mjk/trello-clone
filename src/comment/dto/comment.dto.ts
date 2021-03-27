@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 export class CreateCommentDto {
   @ApiProperty()
@@ -16,4 +16,11 @@ export class CreateCommentDto {
   @ApiProperty()
   @IsNotEmpty()
   columnId: string;
+}
+
+export class FindCardDto {
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
+    cardId: string;
 }

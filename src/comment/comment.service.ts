@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from './dto/comment.dto';
 import { CommentTrello } from './entity/comment.entity';
 
 @Injectable()
@@ -12,11 +12,10 @@ export class CommentService {
   ) {}
 
   async save(
-    cardId: string,
     createCommentDto: CreateCommentDto,
   ): Promise<CommentTrello> {
     return await this.comentRepository.save({
-      card: { id: cardId },
+      card: { id: createCommentDto.cardId },
       name: createCommentDto.name,
       description: createCommentDto.description,
     });
@@ -45,11 +44,10 @@ export class CommentService {
   }
 
   async update(
-    cardId: string,
     commentId: string,
     createCommentDto: CreateCommentDto,
   ): Promise<CommentTrello> {
-    let comment = await this.findOne(cardId, commentId);
+    let comment = await this.findOne(createCommentDto.cardId, commentId);
     comment.name = createCommentDto.name;
     comment.description = createCommentDto.description;
 

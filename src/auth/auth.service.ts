@@ -5,18 +5,17 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { CRYPTO_SOIL } from '../constants';
+import { User } from '../users/entity/users.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<User|null> {
     const user = await this.usersService.findByEmail(email);
-    console.log(`USER VALIDATe`);
-    console.log(user);
     if (user && this.validatePassword(password, user.password)) {
       return user;
     }
@@ -39,21 +38,23 @@ export class AuthService {
 
   async signUp(signUpDto: SignUpDto) {
     const user = await this.usersService.findByEmail(signUpDto.email);
-    if (!user) {
-      if (signUpDto.password === signUpDto.passwordConfirmation) {
-        const hashPass = await bcrypt.hash(signUpDto.password, CRYPTO_SOIL);
-        const savedUser = await this.usersService.save(
-          signUpDto.email,
-          hashPass,
-          signUpDto.username,
-        );
-        const payload = { username: signUpDto.username, sub: savedUser.id };
-        return {
-          access_token: this.jwtService.sign(payload),
-        };
-      }
+    if (user) {
+      throw new BadRequestException('User with email already exsist');
+    }
+    if (signUpDto.password !== signUpDto.passwordConfirmation) {
       throw new BadRequestException('passwords do not match');
     }
-    throw new BadRequestException('User with email already exsist');
+    const hashPass = await bcrypt.hash(signUpDto.password, CRYPTO_SOIL);
+    const savedUser = await this.usersService.save(
+      signUpDto.email,
+      hashPass,
+      signUpDto.username,
+    );
+    const payload = { username: signUpDto.username, sub: savedUser.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+
+
   }
 }

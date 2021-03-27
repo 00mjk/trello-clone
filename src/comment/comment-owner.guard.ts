@@ -4,9 +4,8 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { In } from 'typeorm';
-import { CardService } from '../../card/card.service';
-import { ColumnService } from '../../column/column.service';
+import { CardService } from '../card/card.service';
+import { ColumnService } from '../column/column.service';
 
 @Injectable()
 export class CommentOwnerGuard implements CanActivate {
@@ -28,8 +27,6 @@ export class CommentOwnerGuard implements CanActivate {
     if (!card) {
       return false;
     }
-    request.column = column;
-    request.card = card;
     return true;
   }
 }

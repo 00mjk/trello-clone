@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
-import { AccessGuard } from '../shared/guards/access.guard';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
+import { AccessGuard } from './access.guard';
 import { UpdateUserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 

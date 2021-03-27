@@ -34,11 +34,11 @@ export class UsersController {
     @Param('id') id: string,
     @Body(new ValidationPipe()) body: UpdateUserDto,
   ) {
-    return this.userService.update(id,body)
+    return this.userService.update(id, body);
   }
 
   @Delete(':id')
   deleteUser(@Param('id') id: string) {
-    return this.userService.remove(id)
+    return this.userService.remove(id);
   }
 }

@@ -19,8 +19,8 @@ export class CreateCommentDto {
 }
 
 export class FindCardDto {
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    cardId: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  cardId: string;
 }

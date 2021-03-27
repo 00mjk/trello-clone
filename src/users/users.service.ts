@@ -28,17 +28,17 @@ export class UsersService {
     return await this.userRepository.findOne({ id });
   }
 
-  async remove(id: string): Promise<User|null> {
-    const user = await this.findOne(id)
+  async remove(id: string): Promise<User | null> {
+    const user = await this.findOne(id);
     await this.userRepository.delete({
-      id
-    })
+      id,
+    });
     return user;
   }
-  
-  async update(id:string,updateUserDto: UpdateUserDto): Promise<User|null> {
-    let user = await this.findOne(id)
-    const updateUser = {id: user.id ,...updateUserDto}
-    return await this.userRepository.save(updateUser)
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+    let user = await this.findOne(id);
+    const updateUser = { id: user.id, ...updateUserDto };
+    return await this.userRepository.save(updateUser);
   }
 }

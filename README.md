@@ -1,14 +1,13 @@
 # Trello clone 📅
 
-## Описание 📝
+## Description 📝
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-Тестовый проект на котором я изучал Nestjs
-Сейчас тут много хардкора, пытаюсь это фиксить в ветке refactoring
+<br></br>
 
-В issue можно проследить путь развития проекта
+Trello clone backend
 
-## Установка ⚙️
+## Installation ⚙️
 
 ```bash
 $ yarn install
@@ -17,7 +16,7 @@ $ docker-compose up
 
 ```
 
-## Запуск🏁
+## Start 🏁
 
 ```bash
 # development
@@ -30,7 +29,7 @@ $ yarn start:dev
 $ yarn start:prod
 ```
 
-## Тестирование 🔥🔥🔥
+## Test 🔥🔥🔥
 
 ```bash
 # unit tests
@@ -42,6 +41,11 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+
+## Swagger API
+
+`http://localhost:3000/api`
 
 ## Лицензия
 

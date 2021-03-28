@@ -42,7 +42,6 @@ $ yarn test:e2e
 $ yarn test:cov
 ```
 
-
 ## Swagger API
 
 `http://localhost:3000/api`

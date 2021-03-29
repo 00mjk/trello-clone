@@ -47,6 +47,6 @@ $ yarn test:cov
 
 `http://localhost:3000/api`
 
-## Лицензия
+## LICENSE
 
 Nest is [MIT licensed](LICENSE).

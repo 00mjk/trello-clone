@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class CardOwnerGuard implements CanActivate {
+export class CardExsistGuard implements CanActivate {
   constructor(@Inject('ColumnService') private readonly columnService) {}
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();

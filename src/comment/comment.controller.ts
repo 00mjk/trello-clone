@@ -14,10 +14,12 @@ import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { CommentService } from './comment.service';
 import { CreateCommentDto, FindCardDto } from './dto/comment.dto';
 import { CommentOwnerGuard } from './comment-owner.guard';
+import { CardExsistGuard } from '../card/card-exsist.guard';
+import { ColumnExsistGuard } from '../column/guards/column-exsist.guard';
 
 @ApiBearerAuth()
 @ApiTags('comment')
-@UseGuards(JwtAuthGuard, CommentOwnerGuard)
+@UseGuards(JwtAuthGuard, CommentOwnerGuard,CardExsistGuard,ColumnExsistGuard)
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}

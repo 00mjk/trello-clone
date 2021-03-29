@@ -19,7 +19,7 @@ import { ColumnExsistGuard } from '../column/guards/column-exsist.guard';
 
 @ApiBearerAuth()
 @ApiTags('comment')
-@UseGuards(JwtAuthGuard, CommentOwnerGuard,CardExsistGuard,ColumnExsistGuard)
+@UseGuards(JwtAuthGuard, CommentOwnerGuard, CardExsistGuard, ColumnExsistGuard)
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}

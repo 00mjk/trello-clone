@@ -31,7 +31,7 @@ export class AuthService {
     if (!user) {
       throw new BadRequestException('passwords do not match');
     }
-    const payload = { username: user.username, sub: user.id };
+    const payload = { email: user.email, sub: user.id };
     const token = this.jwtService.sign(payload);
     return { user_info: { ...user }, access_token: token };
   }
@@ -50,7 +50,7 @@ export class AuthService {
       hashPass,
       signUpDto.username,
     );
-    const payload = { username: signUpDto.username, sub: savedUser.id };
+    const payload = { email: signUpDto.email, sub: savedUser.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

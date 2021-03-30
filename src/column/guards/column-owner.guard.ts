@@ -1,15 +1,25 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ColumnService } from '../column.service';
 
 @Injectable()
 export class ColumnOwnerGuard implements CanActivate {
-  canActivate(
+  constructor(@Inject('ColumnService') private readonly columnService: ColumnService) { }
+  async canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    if (request.user && request.body) {
-      return request.user.userId === request.body.userId;
+    if (!request.user) {
+      throw new UnauthorizedException()
     }
-    return false;
+    const { id } = request.user
+    const  columnId  = request.params.id
+    if(columnId){
+      const column = await this.columnService.findOne(id,columnId)
+      if(!column){
+        throw new HttpException("Columns not found", HttpStatus.NOT_FOUND)
+      }
+      return id === column.user.id
+    }
+    return true;
   }
 }

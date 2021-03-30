@@ -20,19 +20,19 @@ import { CreateColumnDto } from './dto/create-column.dto';
 
 @ApiBearerAuth()
 @ApiTags('column')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard,ColumnOwnerGuard)
 @Controller('column')
 export class ColumnController {
   constructor(private readonly columnService: ColumnService) {}
 
   @Get(':id')
   getColumn(@Param('id') id: string, @User() user) {
-    return this.columnService.findOne(user.userId, id);
+    return this.columnService.findOne(user.id, id);
   }
 
   @Get()
   getColumns(@User() user) {
-    return this.columnService.findAll(user.userId);
+    return this.columnService.findAll(user.id);
   }
 
   @Post()
@@ -40,12 +40,12 @@ export class ColumnController {
     @User() user,
     @Body(new ValidationPipe()) body: CreateColumnDto,
   ) {
-    return this.columnService.save(user.userId, body);
+    return this.columnService.save(user.id, body);
   }
 
   @Delete(':id')
   removeColumn(@User() user, @Param('id') id: string) {
-    return this.columnService.remove(user.userId, id);
+    return this.columnService.remove(user.id, id);
   }
 
   @Put(':id')
@@ -54,6 +54,6 @@ export class ColumnController {
     @Param('id') id: string,
     @Body(new ValidationPipe()) body: CreateColumnDto,
   ) {
-    return this.columnService.update(user.userId, id, body);
+    return this.columnService.update(user.id, id, body);
   }
 }

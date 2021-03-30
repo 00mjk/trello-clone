@@ -1,4 +1,11 @@
-import { CanActivate, ExecutionContext, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { ColumnService } from '../column.service';
 
 @Injectable()
@@ -15,7 +22,7 @@ export class ColumnExsistGuard implements CanActivate {
 
     const column = await this.columnService.findOne(userId, columnId);
     if (!column) {
-        throw new HttpException("Column not found",HttpStatus.NOT_FOUND)
+      throw new HttpException('Column not found', HttpStatus.NOT_FOUND);
     }
     return true;
   }

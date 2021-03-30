@@ -20,7 +20,7 @@ import { CreateColumnDto } from './dto/create-column.dto';
 
 @ApiBearerAuth()
 @ApiTags('column')
-@UseGuards(JwtAuthGuard,ColumnOwnerGuard)
+@UseGuards(JwtAuthGuard, ColumnOwnerGuard)
 @Controller('column')
 export class ColumnController {
   constructor(private readonly columnService: ColumnService) {}

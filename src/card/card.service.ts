@@ -27,11 +27,14 @@ export class CardService {
     });
   }
 
-  async save(createCardDto: CreateCardDto,userId: string): Promise<CardTrello> {
+  async save(
+    createCardDto: CreateCardDto,
+    userId: string,
+  ): Promise<CardTrello> {
     return await this.cardRepository.save({
       column: { id: createCardDto.columnId },
       name: createCardDto.name,
-      userId
+      userId,
     });
   }
 

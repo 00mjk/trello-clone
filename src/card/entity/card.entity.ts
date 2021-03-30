@@ -21,7 +21,7 @@ export class CardTrello {
   //columnId: string
 
   @Column()
-  userId: string
+  userId: string;
 
   @ManyToOne(() => ColumnTrello, (columnTrello) => columnTrello.cards)
   column: ColumnTrello;

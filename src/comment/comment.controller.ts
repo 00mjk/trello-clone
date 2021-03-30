@@ -29,8 +29,8 @@ export class CommentController {
   }
 
   @Get(':id')
-  getComment(@Body(new ValidationPipe()) body: FindCardDto,@Param('id') id){
-    return this.commentService.findOne(body.cardId,id)
+  getComment(@Body(new ValidationPipe()) body: FindCardDto, @Param('id') id) {
+    return this.commentService.findOne(body.cardId, id);
   }
 
   @Post()

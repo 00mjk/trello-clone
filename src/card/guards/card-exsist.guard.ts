@@ -16,7 +16,7 @@ export class CardExsistGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
 
-    console.log(request.body)
+    console.log(request.body);
     const { columnId } = request.body;
     const { cardId } = request.body;
     const card = await this.cardService.findOne(columnId, cardId);

@@ -4,8 +4,8 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { CardService } from '../card/card.service';
-import { ColumnService } from '../column/column.service';
+import { CardService } from '../../card/card.service';
+import { ColumnService } from '../../column/column.service';
 
 @Injectable()
 export class CommentOwnerGuard implements CanActivate {

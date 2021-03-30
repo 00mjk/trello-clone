@@ -13,7 +13,6 @@ import { JwtAuthGuard } from '../auth/auth.guard';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 import { CommentService } from './comment.service';
 import { CreateCommentDto, FindCardDto } from './dto/comment.dto';
-import { CommentOwnerGuard } from './comment-owner.guard';
 import { CardExsistGuard } from '../card/guards/card-exsist.guard';
 import { ColumnExsistGuard } from '../column/guards/column-exsist.guard';
 
@@ -27,6 +26,11 @@ export class CommentController {
   @Get()
   getComments(@Body(new ValidationPipe()) body: FindCardDto) {
     return this.commentService.findAll(body.cardId);
+  }
+
+  @Get(':id')
+  getComment(@Body(new ValidationPipe()) body: FindCardDto,@Param('id') id){
+    return this.commentService.findOne(body.cardId,id)
   }
 
   @Post()

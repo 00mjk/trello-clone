@@ -20,6 +20,9 @@ export class CardTrello {
   //@Column()
   //columnId: string
 
+  @Column()
+  userId: string
+
   @ManyToOne(() => ColumnTrello, (columnTrello) => columnTrello.cards)
   column: ColumnTrello;
 

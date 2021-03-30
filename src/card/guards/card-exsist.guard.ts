@@ -6,7 +6,7 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { CardService } from './card.service';
+import { CardService } from '../card.service';
 
 @Injectable()
 export class CardExsistGuard implements CanActivate {

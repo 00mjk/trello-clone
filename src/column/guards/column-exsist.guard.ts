@@ -18,9 +18,9 @@ export class ColumnExsistGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     const { columnId } = request.body;
-    const { userId } = request.user;
+    const { id } = request.user;
 
-    const column = await this.columnService.findOne(userId, columnId);
+    const column = await this.columnService.findOne(id, columnId);
     if (!column) {
       throw new HttpException('Column not found', HttpStatus.NOT_FOUND);
     }

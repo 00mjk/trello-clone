@@ -1,21 +1,24 @@
 import {
   CanActivate,
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Inject,
   Injectable,
 } from '@nestjs/common';
+import { CardService } from './card.service';
 
 @Injectable()
 export class CardExsistGuard implements CanActivate {
-  constructor(@Inject('ColumnService') private readonly columnService) {}
+  constructor(@Inject('CardService') private readonly cardService: CardService) {}
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
 
-    const { userId } = request.user;
     const { columnId } = request.body;
-    const column = await this.columnService.findOne(userId, columnId);
-    if (!column) {
-      return false;
+    const {cardId} = request.body
+    const card = await this.cardService.findOne(columnId, cardId);
+    if (!card) {
+      throw new HttpException("Cards not found",HttpStatus.NOT_FOUND)
     }
     return true;
   }

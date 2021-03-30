@@ -11,13 +11,15 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
+import { ColumnExsistGuard } from '../column/guards/column-exsist.guard';
+import { User } from '../shared/decorators/user.decorator';
 import { CardExsistGuard } from './card-exsist.guard';
 import { CardService } from './card.service';
 import { CreateCardDto, FindColumnDto } from './dto/card.dto';
 
 @ApiBearerAuth()
 @ApiTags('card')
-@UseGuards(JwtAuthGuard, CardExsistGuard)
+@UseGuards(JwtAuthGuard, ColumnExsistGuard)
 @Controller('card')
 export class CardController {
   constructor(private readonly cardService: CardService) {}

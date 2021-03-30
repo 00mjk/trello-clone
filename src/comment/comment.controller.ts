@@ -19,7 +19,7 @@ import { ColumnExsistGuard } from '../column/guards/column-exsist.guard';
 
 @ApiBearerAuth()
 @ApiTags('comment')
-@UseGuards(JwtAuthGuard, CommentOwnerGuard,CardExsistGuard,ColumnExsistGuard)
+@UseGuards(JwtAuthGuard,CardExsistGuard,ColumnExsistGuard)
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
@@ -31,7 +31,7 @@ export class CommentController {
 
   @Post()
   createComment(@Body(new ValidationPipe()) body: CreateCommentDto) {
-    this.commentService.save(body);
+    return this.commentService.save(body);
   }
 
   @Put(':id')
@@ -39,7 +39,7 @@ export class CommentController {
     @Body(new ValidationPipe()) body: CreateCommentDto,
     @Param('id') id: string,
   ) {
-    this.commentService.update(id, body);
+    return this.commentService.update(id, body);
   }
 
   @Delete(':id')
@@ -47,6 +47,6 @@ export class CommentController {
     @Body(new ValidationPipe()) body: FindCardDto,
     @Param('id') id,
   ) {
-    this.commentService.remove(body.cardId, id);
+    return this.commentService.remove(body.cardId, id);
   }
 }
